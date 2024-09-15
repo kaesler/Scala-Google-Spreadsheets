@@ -19,8 +19,7 @@ import scala.util.{Failure, Success}
  * @param decoder decoder to go from type U to Output type
  * @tparam U return type
  */
-final class CustomFunction8
-[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, +U]
+final class CustomFunction8[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, +U]
 (f: (T1, T2, T3, T4, T5, T6, T7, T8) => U)
 (implicit
 encoder1: Encoder[T1],
