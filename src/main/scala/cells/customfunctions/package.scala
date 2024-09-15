@@ -1,7 +1,7 @@
 package cells
 
 import scala.scalajs.js
-import scala.scalajs.js.|
+//import scala.scalajs.js.|
 
 package object customfunctions {
 

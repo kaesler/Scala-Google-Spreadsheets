@@ -1,6 +1,6 @@
 package tutorial.customfunctions
 
-import cells.Cell._
+import cells.Cell.*
 import cells.customfunctions.{Encoder, Output}
 
 import scala.util.Try

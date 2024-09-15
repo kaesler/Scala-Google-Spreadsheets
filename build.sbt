@@ -12,8 +12,22 @@ lazy val fullCompileCreateFunctions =
   taskKey[Unit]("Full compile, and adds to the compiled file the created functions")
 
 ThisBuild / scalacOptions ++= Seq(
-  "-unchecked",
-  "-deprecation"
+  "-Wnonunit-statement",
+  "-Wunused:explicits",
+  "-Wunused:implicits",
+  "-Wunused:imports",
+  "-Wunused:locals",
+  "-Wunused:params",
+  "-Wunused:privates",
+  "-Wvalue-discard",
+  "-Xfatal-warnings",
+  "-Xmigration",
+  "-deprecation",
+  "-explain-types",
+  "-feature",
+  "-language:implicitConversions",
+  "-source:future",
+  "-unchecked"
 )
 
 /** Returns a list of stuff to add at the end of compiled file for adding Google
