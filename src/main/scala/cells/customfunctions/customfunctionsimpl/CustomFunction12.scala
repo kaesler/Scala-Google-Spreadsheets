@@ -56,7 +56,7 @@ extends ((Input, Input, Input, Input, Input, Input, Input, Input, Input, Input, 
   arg10 <- encoder10(input10)
   arg11 <- encoder11(input11)
   arg12 <- encoder12(input12)
- output = f(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12)
+  output = f(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12)
  } yield decoder(output)
  ) match {
   case Success(value) => value

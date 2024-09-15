@@ -32,7 +32,7 @@ extends ((Input, Input, Input, Input) => Output) {
   arg2 <- encoder2(input2)
   arg3 <- encoder3(input3)
   arg4 <- encoder4(input4)
- output = f(arg1, arg2, arg3, arg4)
+  output = f(arg1, arg2, arg3, arg4)
  } yield decoder(output)
  ) match {
   case Success(value) => value

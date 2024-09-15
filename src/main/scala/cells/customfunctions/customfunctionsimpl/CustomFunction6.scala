@@ -38,7 +38,7 @@ extends ((Input, Input, Input, Input, Input, Input) => Output) {
   arg4 <- encoder4(input4)
   arg5 <- encoder5(input5)
   arg6 <- encoder6(input6)
- output = f(arg1, arg2, arg3, arg4, arg5, arg6)
+  output = f(arg1, arg2, arg3, arg4, arg5, arg6)
  } yield decoder(output)
  ) match {
   case Success(value) => value
