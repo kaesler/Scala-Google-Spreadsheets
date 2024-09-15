@@ -11,12 +11,9 @@ val fullCompileRenderer = taskKey[File]("Return full optimized main file")
 lazy val fullCompileCreateFunctions =
   taskKey[Unit]("Full compile, and adds to the compiled file the created functions")
 
-scalacOptions in ThisBuild ++= Seq(
+ThisBuild / scalacOptions ++= Seq(
   "-unchecked",
-  "-deprecation",
-  "-rewrite",
-  "-source",
-  "3.4-migration"
+  "-deprecation"
 )
 
 /** Returns a list of stuff to add at the end of compiled file for adding Google
