@@ -5,6 +5,4 @@ import scala.scalajs.js.annotation.JSGlobal
 
 @js.native
 @JSGlobal("Analytics")
-object Analytics extends js.Object {
-
-}
+object Analytics extends js.Object {}

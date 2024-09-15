@@ -2,9 +2,8 @@ package facade.spreadsheetapp
 
 import scala.scalajs.js
 
-/**
- * https://developers.google.com/apps-script/reference/spreadsheet/range-list
- */
+/** https://developers.google.com/apps-script/reference/spreadsheet/range-list
+  */
 @js.native
 trait RangeList extends js.Object {
 

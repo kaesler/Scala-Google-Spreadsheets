@@ -5,9 +5,8 @@ import facade.charts.chartbuilder.EmbeddedChartBuilder
 
 import scala.scalajs.js
 
-/**
- * https://developers.google.com/apps-script/reference/spreadsheet/sheet
- */
+/** https://developers.google.com/apps-script/reference/spreadsheet/sheet
+  */
 @js.native
 trait Sheet extends js.Object {
 

@@ -2,9 +2,8 @@ package facade.spreadsheetapp
 
 import scala.scalajs.js
 
-/**
- * https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet
- */
+/** https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet
+  */
 @js.native
 trait SpreadSheet extends js.Object {
 

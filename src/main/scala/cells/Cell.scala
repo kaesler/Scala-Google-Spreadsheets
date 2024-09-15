@@ -9,10 +9,9 @@ import scala.scalajs.js.|
 import scala.scalajs.js.JSConverters._
 import scala.util.Try
 
-/**
- * A Cell is simply a wrapper for values that we get from Google SpreadSheets.
- * As the Google doc says, a value can be a String, a Number (Double), a js.Date or a Boolean.
- */
+/** A Cell is simply a wrapper for values that we get from Google SpreadSheets. As the
+  * Google doc says, a value can be a String, a Number (Double), a js.Date or a Boolean.
+  */
 final case class Cell(value: Data) {
 
   /** Returns whether the content is a Double. */
@@ -23,10 +22,12 @@ final case class Cell(value: Data) {
 
   def isBoolean: Boolean = (value: Any).isInstanceOf[Boolean]
 
-  /** Returns whether this cell contains the empty string, which comes out of empty spreadsheet cells. */
+  /** Returns whether this cell contains the empty string, which comes out of empty
+    * spreadsheet cells.
+    */
   def isEmpty: Boolean = (value: Any) match {
     case s: String if s == "" => true
-    case _ => false
+    case _                    => false
   }
 
   /** Maps the content of this cell via the function f. */
@@ -37,19 +38,22 @@ final case class Cell(value: Data) {
 
   def ==(that: String): Boolean = (value: Any) match {
     case s: String => s == that
-    case _ => false
+    case _         => false
   }
 
   def ==(that: Double): Boolean = (value: Any) match {
     case x: Double => x == that
-    case _ => false
+    case _         => false
   }
 
   def toDouble: Try[Double] = Try {
     (value: Any) match {
       case value: Double => value
-      case value: Int => value
-      case _ => throw new WrongDataTypeException(s"value ($value) data type is ${value.getClass}, but should be Double.")
+      case value: Int    => value
+      case _ =>
+        throw new WrongDataTypeException(
+          s"value ($value) data type is ${value.getClass}, but should be Double."
+        )
     }
   }
 
@@ -57,21 +61,26 @@ final case class Cell(value: Data) {
     (value: Any) match {
       case value: Double => value.toInt
       case value: String => value.toInt
-      case _ => throw new WrongDataTypeException(s"value data type is ${value.getClass}, but should be Int.")
+      case _ =>
+        throw new WrongDataTypeException(
+          s"value data type is ${value.getClass}, but should be Int."
+        )
     }
   }
 
   def toDate: Try[js.Date] = Try {
     value match {
       case value: js.Date => value
-      case _ => throw new WrongDataTypeException(s"value data type is ${value.getClass}, but should be js.Date.")
+      case _ =>
+        throw new WrongDataTypeException(
+          s"value data type is ${value.getClass}, but should be js.Date."
+        )
     }
   }
 
   override def toString: String = value.toString
 
 }
-
 
 object Cell {
 
@@ -98,7 +107,7 @@ object Cell {
 
   implicit def fromBoolean(b: Boolean): Cell = Cell(b)
 
-  //implicit def fromJS(value: Data): Cell = Cell(value)
+  // implicit def fromJS(value: Data): Cell = Cell(value)
 
   implicit class VectorToJS(cells: Vector[Vector[Cell]]) {
     def toGoogleCells: js.Array[js.Array[Data]] = toJSArray(cells)
