@@ -22,7 +22,7 @@ object CustomFunctionsAbstractionExamples {
    * The `asCustomFunction` implicit method comes from [[FromFunction1]] imported above.
    */
   @JSExportTopLevel("COUNTBIGFOO")
-  def jsCountBigFoo(input: Input): Output = (countBigFoo _).asCustomFunction(input)
+  def jsCountBigFoo(input: Input): Output = (countBigFoo).asCustomFunction(input)
 
 
 
@@ -37,7 +37,7 @@ object CustomFunctionsAbstractionExamples {
 
   @JSExportTopLevel("SUMBYCATEGORY")
   def jsSumByCategories(categories: Input, values: Input): Output =
-    (sumByCategory _).asCustomFunction(categories, values)
+    (sumByCategory).asCustomFunction(categories, values)
 
 
   /** Exception example. */
@@ -50,7 +50,7 @@ object CustomFunctionsAbstractionExamples {
    * The output of the function is simply the message of the exception.
    */
   @JSExportTopLevel("THROWEXCEPTION")
-  def jsThrowException(input: Input): Output = (throwException _).asCustomFunction(input)
+  def jsThrowException(input: Input): Output = (throwException).asCustomFunction(input)
 
 
 }

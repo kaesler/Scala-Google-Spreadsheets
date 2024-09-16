@@ -18,8 +18,7 @@ import scala.util.{Failure, Success}
  * @param decoder decoder to go from type U to Output type
  * @tparam U return type
  */
-final class CustomFunction7
-[-T1, -T2, -T3, -T4, -T5, -T6, -T7, +U]
+final class CustomFunction7[-T1, -T2, -T3, -T4, -T5, -T6, -T7, +U]
 (f: (T1, T2, T3, T4, T5, T6, T7) => U)
 (implicit
 encoder1: Encoder[T1],
@@ -42,7 +41,7 @@ extends ((Input, Input, Input, Input, Input, Input, Input) => Output) {
   arg5 <- encoder5(input5)
   arg6 <- encoder6(input6)
   arg7 <- encoder7(input7)
- output = f(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+  output = f(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
  } yield decoder(output)
  ) match {
   case Success(value) => value

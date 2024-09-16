@@ -32,8 +32,7 @@ import scala.util.{Failure, Success}
  * @param decoder decoder to go from type U to Output type
  * @tparam U return type
  */
-final class CustomFunction21
-[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, -T9, -T10, -T11, -T12, -T13, -T14, -T15, -T16, -T17, -T18, -T19, -T20, -T21, +U]
+final class CustomFunction21[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, -T9, -T10, -T11, -T12, -T13, -T14, -T15, -T16, -T17, -T18, -T19, -T20, -T21, +U]
 (f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21) => U)
 (implicit
 encoder1: Encoder[T1],
@@ -84,7 +83,7 @@ extends ((Input, Input, Input, Input, Input, Input, Input, Input, Input, Input, 
   arg19 <- encoder19(input19)
   arg20 <- encoder20(input20)
   arg21 <- encoder21(input21)
- output = f(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21)
+  output = f(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21)
  } yield decoder(output)
  ) match {
   case Success(value) => value

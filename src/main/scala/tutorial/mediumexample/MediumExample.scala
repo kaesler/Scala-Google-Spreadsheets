@@ -68,6 +68,6 @@ object MediumExample {
    */
     @JSExportTopLevel("GASESSIONSBOUNCERATEREPORT")
   def jsGaSessionsBounceRateReport(data: Input, currentMonth: Input): Output =
-    (gaSessionsBounceRateReport _).asCustomFunction(data, currentMonth)
+    (gaSessionsBounceRateReport).asCustomFunction(data, currentMonth)
 
 }
