@@ -21,6 +21,4 @@ trait ListResponse extends js.Object {
 
   val items: js.Array[Goals] = js.native
 
-
-
 }

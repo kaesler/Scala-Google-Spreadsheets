@@ -3,9 +3,8 @@ package facade.googleanalyticsapi.goals
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSGlobal
 
-/**
- * https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/goals
- */
+/** https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/goals
+  */
 @js.native
 trait Goals extends js.Object {
   val accountId: String = js.native
@@ -24,9 +23,9 @@ trait Goals extends js.Object {
 
   val profileId: String = js.native
 
-  /**
-   * Goal type. Possible values are URL_DESTINATION, VISIT_TIME_ON_SITE, VISIT_NUM_PAGES, and EVENT.
-   */
+  /** Goal type. Possible values are URL_DESTINATION, VISIT_TIME_ON_SITE, VISIT_NUM_PAGES,
+    * and EVENT.
+    */
   val `type`: String = js.native
 
   val urlDestinationDetails: UrlDestinationDetails = js.native
@@ -37,9 +36,9 @@ trait Goals extends js.Object {
 @JSGlobal("Analytics.Management.Goals")
 object Goals extends js.Object {
 
-  /**
-   * https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/goals/list
-   */
-  def list(accountId: String, webPropertyId: String, profileId: String): ListResponse = js.native
+  /** https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/goals/list
+    */
+  def list(accountId: String, webPropertyId: String, profileId: String): ListResponse =
+    js.native
 
 }
