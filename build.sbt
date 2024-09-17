@@ -1,3 +1,5 @@
+import org.scalajs.linker.interface.ESVersion
+
 name := "ScalaSpreadSheets"
 
 version := "0.1"
@@ -230,7 +232,7 @@ lazy val `renderer` = project
   .enablePlugins(ScalaJSPlugin)
   .settings(
     ThisBuild / scalaJSLinkerConfig ~= {
-      _.withESFeatures(_.withUseECMAScript2015(false))
+      _.withESFeatures(_.withESVersion(ESVersion.ES5_1))
     },
     fastCompileRenderer := {
       (Compile / fastOptJS).value.data
