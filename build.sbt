@@ -9,7 +9,7 @@ lazy val fastCompileCreateFunctions = taskKey[Unit]("Fast compile, and adds to t
 val fullCompileRenderer = taskKey[File]("Return full optimized main file")
 lazy val fullCompileCreateFunctions = taskKey[Unit]("Full compile, and adds to the compiled file the created functions")
 
-scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation")
+ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation")
 
 /**
  * Returns a list of stuff to add at the end of compiled file for adding Google functions.
@@ -206,7 +206,7 @@ fullCompileCreateFunctions := {
 lazy val `renderer` = project.in(file("."))
   .enablePlugins(ScalaJSPlugin)
   .settings(
-    scalaJSLinkerConfig in ThisBuild ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
+    ThisBuild / scalaJSLinkerConfig  ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
     fastCompileRenderer := {
       (fastOptJS in Compile).value.data
     },
