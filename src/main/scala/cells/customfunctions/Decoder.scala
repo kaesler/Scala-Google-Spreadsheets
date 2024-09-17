@@ -1,9 +1,7 @@
 package cells.customfunctions
 
 import cells.Cell
-import cells.Cell.Data
-import cells.Cell.VectorToJS
-
+import cells.Cell.{Data, VectorToJS}
 import scala.scalajs.js
 
 /** A [[Decoder]] takes the result of a custom function, of type U, and decodes it as an

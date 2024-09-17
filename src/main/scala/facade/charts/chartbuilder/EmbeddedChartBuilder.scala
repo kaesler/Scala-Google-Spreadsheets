@@ -2,7 +2,6 @@ package facade.charts.chartbuilder
 
 import facade.charts.{Chart, DataTableBuilder, EmbeddedChart}
 import facade.spreadsheetapp.Range
-
 import scala.scalajs.js
 
 /** https://developers.google.com/apps-script/reference/spreadsheet/embedded-chart-builder

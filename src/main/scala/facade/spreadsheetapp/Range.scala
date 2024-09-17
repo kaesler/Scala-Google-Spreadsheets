@@ -1,7 +1,6 @@
 package facade.spreadsheetapp
 
 import cells.Cell.Data
-
 import scala.scalajs.js
 
 /** https://developers.google.com/apps-script/reference/spreadsheet/range

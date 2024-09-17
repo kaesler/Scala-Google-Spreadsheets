@@ -2,11 +2,10 @@ package cells
 
 import cells.Cell.Data
 import exceptions.WrongDataTypeException
-
 import scala.language.implicitConversions
 import scala.scalajs.js
+import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.|
-import scala.scalajs.js.JSConverters._
 import scala.util.Try
 
 /** A Cell is simply a wrapper for values that we get from Google SpreadSheets. As the

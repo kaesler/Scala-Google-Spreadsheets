@@ -1,8 +1,7 @@
 package cells.customfunctions
 
 import cells.Cell
-import cells.Cell._
-
+import cells.Cell.*
 import scala.scalajs.js
 import scala.util.Try
 

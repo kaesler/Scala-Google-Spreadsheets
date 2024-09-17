@@ -3,7 +3,6 @@ package tutorial
 import cells.Cell.Data
 import facade.urlfetchservice.UrlFetchApp
 import facade.xmlservice.XmlService
-
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 

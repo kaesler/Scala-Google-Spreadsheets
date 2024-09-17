@@ -1,12 +1,11 @@
 package tutorial.mediumexample
 
-import cells.customfunctions.{Input, Output}
 import cells.customfunctions.customfunctionsimpl.CustomFunction2.FromFunction2
-import tutorial.mediumexample.GASessionsBounceRateReport.{BounceRateInfo, DataRow, SessionsInfo}
-
+import cells.customfunctions.{Input, Output}
 import scala.scalajs.js
 import scala.scalajs.js.Date
 import scala.scalajs.js.annotation.JSExportTopLevel
+import tutorial.mediumexample.GASessionsBounceRateReport.{BounceRateInfo, DataRow, SessionsInfo}
 
 object MediumExample {
 

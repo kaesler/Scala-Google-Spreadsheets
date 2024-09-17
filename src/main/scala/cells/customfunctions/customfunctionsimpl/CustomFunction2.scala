@@ -1,7 +1,6 @@
 package cells.customfunctions.customfunctionsimpl
 
 import cells.customfunctions.{Decoder, Encoder, Input, Output}
-
 import scala.scalajs.js
 import scala.util.{Failure, Success}
 

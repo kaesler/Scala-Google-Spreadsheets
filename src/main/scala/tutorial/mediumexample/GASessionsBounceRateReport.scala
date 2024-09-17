@@ -1,10 +1,9 @@
 package tutorial.mediumexample
 
-import GASessionsBounceRateReport.DataRow
 import cells.Cell.Data
 import cells.customfunctions.{Decoder, Output}
-
 import scala.scalajs.js
+import tutorial.mediumexample.GASessionsBounceRateReport.DataRow
 
 /** Contains the [[DataRow]] information for different kinds of information type. For
   * example, "Current Month" or "Year to Date".

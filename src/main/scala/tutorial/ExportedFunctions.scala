@@ -1,10 +1,9 @@
 package tutorial
 
 import cells.Cell
-import cells.Cell._
+import cells.Cell.*
 import cells.customfunctions.{Encoder, Input}
 import exceptions.WrongDataTypeException
-
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 

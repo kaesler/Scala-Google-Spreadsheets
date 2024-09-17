@@ -4,7 +4,6 @@ import cells.Cell
 import cells.customfunctions.customfunctionsimpl.CustomFunction1.FromFunction1
 import cells.customfunctions.customfunctionsimpl.CustomFunction2.FromFunction2
 import cells.customfunctions.{Input, Output}
-
 import scala.scalajs.js.annotation.JSExportTopLevel
 import scala.util.Try
 

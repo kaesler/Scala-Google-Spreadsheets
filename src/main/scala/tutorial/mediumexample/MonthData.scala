@@ -1,8 +1,7 @@
 package tutorial.mediumexample
 
-import cells.Cell._
+import cells.Cell.*
 import cells.customfunctions.Encoder
-
 import scala.scalajs.js
 import scala.util.Try
 

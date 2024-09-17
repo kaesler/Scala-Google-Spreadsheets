@@ -4,7 +4,6 @@ import cells.Cell
 import cells.Cell.VectorToJS
 import facade.googleanalyticsapi.goals.Goals
 import facade.spreadsheetapp.SpreadsheetApp
-
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 object GoalsTesting {
