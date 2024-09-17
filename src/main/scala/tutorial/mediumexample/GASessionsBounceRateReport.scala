@@ -1,7 +1,7 @@
 package tutorial.mediumexample
 
 import cells.Cell.Data
-import cells.customfunctions.{Decoder, Output}
+import cells.customfunctions.Decoder
 import scala.scalajs.js
 import tutorial.mediumexample.GASessionsBounceRateReport.DataRow
 

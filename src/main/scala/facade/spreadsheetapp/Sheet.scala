@@ -1,7 +1,7 @@
 package facade.spreadsheetapp
 
+import facade.charts.EmbeddedChart
 import facade.charts.chartbuilder.EmbeddedChartBuilder
-import facade.charts.{Chart, EmbeddedChart}
 import scala.scalajs.js
 
 /** https://developers.google.com/apps-script/reference/spreadsheet/sheet

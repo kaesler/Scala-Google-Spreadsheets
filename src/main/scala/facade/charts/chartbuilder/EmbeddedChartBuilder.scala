@@ -1,6 +1,6 @@
 package facade.charts.chartbuilder
 
-import facade.charts.{Chart, DataTableBuilder, EmbeddedChart}
+import facade.charts.{DataTableBuilder, EmbeddedChart}
 import facade.spreadsheetapp.Range
 import scala.scalajs.js
 

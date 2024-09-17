@@ -13,7 +13,26 @@ val fullCompileRenderer = taskKey[File]("Return full optimized main file")
 lazy val fullCompileCreateFunctions =
   taskKey[Unit]("Full compile, and adds to the compiled file the created functions")
 
-ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation")
+ThisBuild / scalacOptions ++= Seq(
+  "-Wnonunit-statement",
+  "-Wunused:explicits",
+  "-Wunused:implicits",
+  // This causes a problem with:
+  //   import scala.scalajs.js.|
+  //"-Wunused:imports",
+  "-Wunused:locals",
+  "-Wunused:params",
+  "-Wunused:privates",
+  "-Wvalue-discard",
+  "-Xfatal-warnings",
+  "-Xmigration",
+  "-deprecation",
+  "-explain-types",
+  "-feature",
+  "-language:implicitConversions",
+//  "-source:future",
+  "-unchecked"
+)
 
 /** Returns a list of stuff to add at the end of compiled file for adding Google
   * functions.
