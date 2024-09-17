@@ -30,7 +30,7 @@ ThisBuild / scalacOptions ++= Seq(
   "-explain-types",
   "-feature",
   "-language:implicitConversions",
-//  "-source:future",
+  "-source:future",
   "-unchecked"
 )
 

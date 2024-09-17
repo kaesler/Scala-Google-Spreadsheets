@@ -25,7 +25,7 @@ final case class Cell(value: Data) {
   /** Returns whether this cell contains the empty string, which comes out of empty
     * spreadsheet cells.
     */
-  def isEmpty: Boolean = (value: Any) match {
+  def isEmpty: Boolean = (value: Matchable) match {
     case s: String if s == "" => true
     case _                    => false
   }
@@ -36,18 +36,18 @@ final case class Cell(value: Data) {
   /** Returns wheter the cell actually contains something. */
   def nonEmpty: Boolean = !isEmpty
 
-  def ==(that: String): Boolean = (value: Any) match {
+  def ==(that: String): Boolean = (value: Matchable) match {
     case s: String => s == that
     case _         => false
   }
 
-  def ==(that: Double): Boolean = (value: Any) match {
+  def ==(that: Double): Boolean = (value: Matchable) match {
     case x: Double => x == that
     case _         => false
   }
 
   def toDouble: Try[Double] = Try {
-    (value: Any) match {
+    (value: Matchable) match {
       case value: Double => value
       case value: Int    => value
       case _ =>
@@ -58,7 +58,7 @@ final case class Cell(value: Data) {
   }
 
   def toInt: Try[Int] = Try {
-    (value: Any) match {
+    (value: Matchable) match {
       case value: Double => value.toInt
       case value: String => value.toInt
       case _ =>

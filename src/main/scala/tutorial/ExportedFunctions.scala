@@ -22,7 +22,7 @@ object ExportedFunctions {
   @JSExportTopLevel("MEAN")
   def mean(xs: js.Array[js.Array[Data]]): Double = {
     val flat = xs.flatten
-      .map((_: Any) match {
+      .map((_: Matchable) match {
         case s: String if s == "" => 0.0
         case elem                 => elem
       })
