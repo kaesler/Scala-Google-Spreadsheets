@@ -5,26 +5,32 @@ version := "0.1"
 scalaVersion := "3.5.0"
 
 val fastCompileRenderer = taskKey[File]("Return main file")
-lazy val fastCompileCreateFunctions = taskKey[Unit]("Fast compile, and adds to the compiled file the created functions")
+lazy val fastCompileCreateFunctions =
+  taskKey[Unit]("Fast compile, and adds to the compiled file the created functions")
 val fullCompileRenderer = taskKey[File]("Return full optimized main file")
-lazy val fullCompileCreateFunctions = taskKey[Unit]("Full compile, and adds to the compiled file the created functions")
+lazy val fullCompileCreateFunctions =
+  taskKey[Unit]("Full compile, and adds to the compiled file the created functions")
 
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation")
 
-/**
- * Returns a list of stuff to add at the end of compiled file for adding Google functions.
- *
- * The file already compiled so we may assume comments, parenthesis and stuff are balanced.
- */
+/** Returns a list of stuff to add at the end of compiled file for adding Google
+  * functions.
+  *
+  * The file already compiled so we may assume comments, parenthesis and stuff are
+  * balanced.
+  */
 def exploreFileForFunctions(directory: File): List[String] = {
-
 
   // while scanning a file, we first collect all function definitions and all comments found
   sealed trait InfoConstruction
   case class Comments(docs: List[String], startIdx: Int) extends InfoConstruction {
     val endIdx = startIdx + docs.length - 1
   }
-  case class FunctionDefinition(functionName: String, arguments: List[String], startIdx: Int) extends InfoConstruction {
+  case class FunctionDefinition(
+    functionName: String,
+    arguments: List[String],
+    startIdx: Int
+  ) extends InfoConstruction {
 
     val args: String = arguments.mkString(", ")
 
@@ -33,18 +39,19 @@ def exploreFileForFunctions(directory: File): List[String] = {
       else {
         val lastCommentLine = comments.last
 
-        comments.dropRight(1) ++ (if (lastCommentLine.dropRight(2).trim.isEmpty) {
-          List(
-            "   * @customfunction",
-            lastCommentLine
-          )
-        } else {
-          List(
-            lastCommentLine.dropRight(2),
-            "   * @customfunction",
-            "   */"
-          )
-        })
+        comments.dropRight(1) ++
+          (if (lastCommentLine.dropRight(2).trim.isEmpty) {
+             List(
+               "   * @customfunction",
+               lastCommentLine
+             )
+           } else {
+             List(
+               lastCommentLine.dropRight(2),
+               "   * @customfunction",
+               "   */"
+             )
+           })
       }
     }
 
@@ -54,7 +61,6 @@ def exploreFileForFunctions(directory: File): List[String] = {
 
     def toGoogleFunction(comments: List[String]): List[String] =
       commentsToGoogleComments(comments) ++ toGoogleFunction
-
 
     def toOverloadedGoogleFunction: List[String] = List(
       s"function ${functionName.toUpperCase}() { return $functionName.apply(void 0, arguments) }"
@@ -67,15 +73,16 @@ def exploreFileForFunctions(directory: File): List[String] = {
   // search for all relevant information for building the Google functions
   @scala.annotation.tailrec
   def constructInformation(
-                            lines: List[String],
-                            lineIdx: Int,
-                            information: List[InfoConstruction]
-                          ): List[InfoConstruction] = {
+    lines: List[String],
+    lineIdx: Int,
+    information: List[InfoConstruction]
+  ): List[InfoConstruction] = {
     if (lines.isEmpty) information
     else {
       val line = lines.head
       if (line.contains("/**")) { // beginning of a comment
-        val endOfCommentsIdx = lines.indexWhere(_.contains("*/")) // looking where comment ends
+        val endOfCommentsIdx =
+          lines.indexWhere(_.contains("*/")) // looking where comment ends
         val lastLine = lines(endOfCommentsIdx)
         // splitting last comment line where the comment ends
         val (endOfComment, restOfTheLine) = lastLine.splitAt(lastLine.indexOf("*/") + 2)
@@ -83,19 +90,30 @@ def exploreFileForFunctions(directory: File): List[String] = {
         val comments = Comments(lines.take(endOfCommentsIdx) :+ endOfComment, lineIdx)
         // continuing with the new comment created.
         constructInformation(
-          restOfTheLine +: lines.drop(endOfCommentsIdx + 1), lineIdx + endOfCommentsIdx, information :+ comments
+          restOfTheLine +: lines.drop(endOfCommentsIdx + 1),
+          lineIdx + endOfCommentsIdx,
+          information :+ comments
         )
       } else if (line.contains("@JSExportTopLevel(\"")) { // need to add a function
         """(?<=\").+?(?=\")""".r.findFirstIn(line) match {
-          case Some(functionName) => // found correct export function name, look for function arguments
+          case Some(
+                functionName
+              ) => // found correct export function name, look for function arguments
             @scala.annotation.tailrec
-            def findFunction(lines: List[String], lineNbr: Int, fctInfo: String): (List[String], Int) = {
+            def findFunction(
+              lines: List[String],
+              lineNbr: Int,
+              fctInfo: String
+            ): (List[String], Int) = {
               """(?<=\().*?(?=\))""".r.findFirstIn(fctInfo) match {
-                case Some(args) => // here args is a string of the form "arg1: T1, arg2: T2, arg3: T3"
+                case Some(
+                      args
+                    ) => // here args is a string of the form "arg1: T1, arg2: T2, arg3: T3"
                   (
                     if (args.trim == "") Nil // no argument here
                     else {
-                      args.split(""", ?""")
+                      args
+                        .split(""", ?""")
                         .map(arg => """.+(?=:)""".r.findFirstIn(arg).get)
                         .toList
                         .map(_.trim) // results is a List of the form List(arg1,arg2,arg3)
@@ -110,7 +128,8 @@ def exploreFileForFunctions(directory: File): List[String] = {
             val annotationRemoved = lines.head.drop(
               """@JSExportTopLevel\(\".+?\"\)""".r.findFirstIn(lines.head).get.length
             )
-            val (arguments, lineNbr) = findFunction(annotationRemoved +: lines.tail, 0, "")
+            val (arguments, lineNbr) =
+              findFunction(annotationRemoved +: lines.tail, 0, "")
 
             constructInformation(
               lines.drop(lineNbr),
@@ -118,7 +137,9 @@ def exploreFileForFunctions(directory: File): List[String] = {
               information :+ FunctionDefinition(functionName, arguments, lineIdx)
             )
           case None =>
-            println(s"[warning] malformed exported function at line ${lineIdx + 1} in file ${directory.toString}")
+            println(
+              s"[warning] malformed exported function at line ${lineIdx + 1} in file ${directory.toString}"
+            )
             constructInformation(lines.tail, lineIdx + 1, information)
         }
 
@@ -128,16 +149,16 @@ def exploreFileForFunctions(directory: File): List[String] = {
     }
   }
 
-
   val exportedFunctionsFile = IO.readLines(directory)
 
-  val information = constructInformation(exportedFunctionsFile, 0, List[InfoConstruction]())
+  val information =
+    constructInformation(exportedFunctionsFile, 0, List[InfoConstruction]())
 
-
-  val (functionDefinitions, commentDefinitions) = information.partition(_.isInstanceOf[FunctionDefinition])
+  val (functionDefinitions, commentDefinitions) =
+    information.partition(_.isInstanceOf[FunctionDefinition])
 
   val functions = functionDefinitions.map(_.asInstanceOf[FunctionDefinition])
-  val comments = commentDefinitions.map(_.asInstanceOf[Comments])
+  val comments  = commentDefinitions.map(_.asInstanceOf[Comments])
 
   val functionsWithComments = functions
     .map(fct => (fct, comments.find(_.endIdx + 1 == fct.startIdx)))
@@ -148,18 +169,19 @@ def exploreFileForFunctions(directory: File): List[String] = {
 
   (single.values.flatten.flatMap({
     case (fct, Some(jsDocs)) => fct.toGoogleFunction(jsDocs.docs)
-    case (fct, None) => fct.toGoogleFunction
-  }) ++ overloaded.values.map(functions => {
-    functions.find(_._2.isDefined) match {
-      case Some(elem) => elem
-      case None => functions.head
-    }
-  }).flatMap({
-    case (fct, Some(jsDocs)) => fct.toOverloadedGoogleFunction(jsDocs.docs)
-    case (fct, None) => fct.toOverloadedGoogleFunction
-  })).toList
+    case (fct, None)         => fct.toGoogleFunction
+  }) ++ overloaded.values
+    .map(functions => {
+      functions.find(_._2.isDefined) match {
+        case Some(elem) => elem
+        case None       => functions.head
+      }
+    })
+    .flatMap({
+      case (fct, Some(jsDocs)) => fct.toOverloadedGoogleFunction(jsDocs.docs)
+      case (fct, None)         => fct.toOverloadedGoogleFunction
+    })).toList
 }
-
 
 def recursiveListFiles(f: File): Array[File] = {
   val (directories, files) = f.listFiles.partition(_.isDirectory)
@@ -168,7 +190,8 @@ def recursiveListFiles(f: File): Array[File] = {
 
 def createGoogleFunctions(compiledFileDirectory: File, baseDirectory: File): Unit = {
   // ignoring files listed in file "google-export-ignore".
-  val ignoredFiles = IO.readLines(baseDirectory / "google-export-ignore")
+  val ignoredFiles = IO
+    .readLines(baseDirectory / "google-export-ignore")
     .map(_.trim)
     .filter(_.nonEmpty)
     .filterNot(_.startsWith("//"))
@@ -202,17 +225,17 @@ fullCompileCreateFunctions := {
 
 }
 
-
-lazy val `renderer` = project.in(file("."))
+lazy val `renderer` = project
+  .in(file("."))
   .enablePlugins(ScalaJSPlugin)
   .settings(
-    ThisBuild / scalaJSLinkerConfig  ~= { _.withESFeatures(_.withUseECMAScript2015(false)) },
+    ThisBuild / scalaJSLinkerConfig ~= {
+      _.withESFeatures(_.withUseECMAScript2015(false))
+    },
     fastCompileRenderer := {
-      (fastOptJS in Compile).value.data
+      (Compile / fastOptJS).value.data
     },
     fullCompileRenderer := {
-      (fullOptJS in Compile).value.data
+      (Compile / fullOptJS).value.data
     }
   )
-
-
