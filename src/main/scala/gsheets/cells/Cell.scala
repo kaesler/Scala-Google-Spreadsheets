@@ -1,7 +1,6 @@
 package gsheets.cells
 
 import scala.collection.immutable.Seq
-import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.|
