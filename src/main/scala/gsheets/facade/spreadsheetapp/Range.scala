@@ -1,6 +1,6 @@
 package gsheets.facade.spreadsheetapp
 
-import gsheets.cells.Cell.CellValue
+import gsheets.cells.CellValue
 import scala.scalajs.js
 
 /** https://developers.google.com/apps-script/reference/spreadsheet/range

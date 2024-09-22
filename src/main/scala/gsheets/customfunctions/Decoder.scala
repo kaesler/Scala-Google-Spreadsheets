@@ -1,7 +1,8 @@
 package gsheets.customfunctions
 
 import gsheets.cells.Cell
-import gsheets.cells.Cell.{CellValue, VectorToJS}
+import gsheets.cells.CellValue
+import gsheets.cells.Cell.VectorToJS
 import scala.scalajs.js
 
 /** A [[Decoder]] takes the result of a custom function, of type U, and decodes it as an

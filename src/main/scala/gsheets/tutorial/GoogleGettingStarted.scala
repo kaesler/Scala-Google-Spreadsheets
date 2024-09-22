@@ -1,6 +1,6 @@
 package gsheets.tutorial
 
-import gsheets.cells.Cell.CellValue
+import gsheets.cells.CellValue
 import gsheets.facade.urlfetchservice.UrlFetchApp
 import gsheets.facade.xmlservice.XmlService
 import scala.scalajs.js

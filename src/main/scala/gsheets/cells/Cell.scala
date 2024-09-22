@@ -1,6 +1,5 @@
 package gsheets.cells
 
-import gsheets.cells.Cell.CellValue
 import scala.collection.immutable.Seq
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -81,9 +80,6 @@ final case class Cell(value: CellValue) {
 }
 
 object Cell {
-
-  /** The type of Data that we can receive from Google SpreadSheets. */
-  type CellValue = String | Double | Boolean | js.Date
 
   def fromJSArray(cells: js.Array[js.Array[CellValue]]): Vector[Vector[Cell]] =
     cells.map(fromJSFlatArray).toVector

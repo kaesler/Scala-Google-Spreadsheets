@@ -1,6 +1,6 @@
 package gsheets.customfunctions
 
-import gsheets.cells.Cell
+import gsheets.cells.{Cell, CellValue}
 import gsheets.cells.Cell.*
 import scala.scalajs.js
 import scala.util.Try

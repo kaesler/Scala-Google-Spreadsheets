@@ -1,7 +1,7 @@
 package gsheets.tutorial
 
-import gsheets.cells.Cell.{CellValue, JSToVector}
-import gsheets.cells.{Cell, WrongDataTypeException}
+import gsheets.cells.Cell.JSToVector
+import gsheets.cells.{Cell, CellValue, WrongDataTypeException}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 

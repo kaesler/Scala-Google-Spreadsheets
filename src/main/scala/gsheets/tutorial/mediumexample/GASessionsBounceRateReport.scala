@@ -1,6 +1,6 @@
 package gsheets.tutorial.mediumexample
 
-import gsheets.cells.Cell.CellValue
+import gsheets.cells.CellValue
 import gsheets.customfunctions.Decoder
 import gsheets.tutorial.mediumexample.GASessionsBounceRateReport.DataRow
 import scala.scalajs.js
