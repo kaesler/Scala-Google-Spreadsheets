@@ -32,7 +32,7 @@ final case class Cell(value: CellValue) {
   /** Maps the content of this cell via the function f. */
   def map(f: CellValue => CellValue): Cell = Cell(f(value))
 
-  /** Returns wheter the cell actually contains something. */
+  /** Returns whether the cell actually contains something. */
   def nonEmpty: Boolean = !isEmpty
 
   def ==(that: String): Boolean = (value: Matchable) match {
@@ -78,36 +78,21 @@ final case class Cell(value: CellValue) {
   }
 
   override def toString: String = value.toString
-
 }
 
 object Cell {
 
   /** The type of Data that we can receive from Google SpreadSheets. */
-  // TODO: rename CellValue
   type CellValue = String | Double | Boolean | js.Date
-
-  /** Transposes the rows into columns. */
-  def columns(row: Vector[Vector[Cell]]): Vector[Vector[Cell]] = row.transpose
-
-  def toJSArray(cells: Seq[Seq[Cell]]): js.Array[js.Array[CellValue]] =
-    cells.map(_.map(_.value).toJSArray).toJSArray
 
   def fromJSArray(cells: js.Array[js.Array[CellValue]]): Vector[Vector[Cell]] =
     cells.map(fromJSFlatArray).toVector
 
-  def fromJSFlatArray(cells: js.Array[CellValue]): Vector[Cell] =
+  private def toJSArray(cells: Seq[Seq[Cell]]): js.Array[js.Array[CellValue]] =
+    cells.map(_.map(_.value).toJSArray).toJSArray
+
+  private def fromJSFlatArray(cells: js.Array[CellValue]): Vector[Cell] =
     cells.toVector.map(new Cell(_))
-
-  implicit def fromDouble(x: Double): Cell = Cell(x)
-
-  implicit def fromString(s: String): Cell = Cell(s)
-
-  implicit def fromDate(d: js.Date): Cell = Cell(d)
-
-  implicit def fromBoolean(b: Boolean): Cell = Cell(b)
-
-  // implicit def fromJS(value: Data): Cell = Cell(value)
 
   // TODO: kae: extension method
   implicit class VectorToJS(cells: Vector[Vector[Cell]]) {
@@ -120,5 +105,4 @@ object Cell {
   implicit class JSToVector(cells: js.Array[js.Array[CellValue]]) {
     def asScala: Vector[Vector[Cell]] = fromJSArray(cells)
   }
-
 }

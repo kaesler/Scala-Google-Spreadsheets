@@ -15,7 +15,6 @@ trait Decoder[-U] {
   def decodeU(u: U): Output
 
   final def apply(u: U): Output = decodeU(u)
-
 }
 
 object Decoder {
