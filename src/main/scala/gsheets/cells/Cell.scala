@@ -1,6 +1,6 @@
 package gsheets.cells
 
-import gsheets.cells.Cell.Data
+import gsheets.cells.Cell.CellValue
 import scala.collection.immutable.Seq
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -11,7 +11,7 @@ import scala.util.Try
 /** A Cell is simply a wrapper for values that we get from Google SpreadSheets. As the
   * Google doc says, a value can be a String, a Number (Double), a js.Date or a Boolean.
   */
-final case class Cell(value: Data) {
+final case class Cell(value: CellValue) {
 
   /** Returns whether the content is a Double. */
   def isNumeric: Boolean = (value: Any).isInstanceOf[Double]
@@ -30,7 +30,7 @@ final case class Cell(value: Data) {
   }
 
   /** Maps the content of this cell via the function f. */
-  def map(f: Data => Data): Cell = Cell(f(value))
+  def map(f: CellValue => CellValue): Cell = Cell(f(value))
 
   /** Returns wheter the cell actually contains something. */
   def nonEmpty: Boolean = !isEmpty
@@ -85,18 +85,18 @@ object Cell {
 
   /** The type of Data that we can receive from Google SpreadSheets. */
   // TODO: rename CellValue
-  type Data = String | Double | Boolean | js.Date
+  type CellValue = String | Double | Boolean | js.Date
 
   /** Transposes the rows into columns. */
   def columns(row: Vector[Vector[Cell]]): Vector[Vector[Cell]] = row.transpose
 
-  def toJSArray(cells: Seq[Seq[Cell]]): js.Array[js.Array[Data]] =
+  def toJSArray(cells: Seq[Seq[Cell]]): js.Array[js.Array[CellValue]] =
     cells.map(_.map(_.value).toJSArray).toJSArray
 
-  def fromJSArray(cells: js.Array[js.Array[Data]]): Vector[Vector[Cell]] =
+  def fromJSArray(cells: js.Array[js.Array[CellValue]]): Vector[Vector[Cell]] =
     cells.map(fromJSFlatArray).toVector
 
-  def fromJSFlatArray(cells: js.Array[Data]): Vector[Cell] =
+  def fromJSFlatArray(cells: js.Array[CellValue]): Vector[Cell] =
     cells.toVector.map(new Cell(_))
 
   implicit def fromDouble(x: Double): Cell = Cell(x)
@@ -111,13 +111,13 @@ object Cell {
 
   // TODO: kae: extension method
   implicit class VectorToJS(cells: Vector[Vector[Cell]]) {
-    def toGoogleCells: js.Array[js.Array[Data]] = toJSArray(cells)
+    def toGoogleCells: js.Array[js.Array[CellValue]] = toJSArray(cells)
 
     def deepMap[U](f: Cell => U): Vector[Vector[U]] = cells.map(_.map(f))
   }
 
   // TODO: kae: extension method
-  implicit class JSToVector(cells: js.Array[js.Array[Data]]) {
+  implicit class JSToVector(cells: js.Array[js.Array[CellValue]]) {
     def asScala: Vector[Vector[Cell]] = fromJSArray(cells)
   }
 

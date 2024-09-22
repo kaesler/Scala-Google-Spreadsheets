@@ -17,11 +17,11 @@ import scala.util.Try
   */
 trait Encoder[+T] {
 
-  def encode(data: js.Array[js.Array[Data]]): Try[T]
+  def encode(data: js.Array[js.Array[CellValue]]): Try[T]
 
   final def apply(input: Input): Try[T] = input match {
-    case input: js.Array[_] => encode(input.asInstanceOf[js.Array[js.Array[Data]]])
-    case input              => encode(js.Array(js.Array(input.asInstanceOf[Data])))
+    case input: js.Array[_] => encode(input.asInstanceOf[js.Array[js.Array[CellValue]]])
+    case input              => encode(js.Array(js.Array(input.asInstanceOf[CellValue])))
   }
 
 }

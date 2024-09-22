@@ -1,6 +1,6 @@
 package gsheets.tutorial
 
-import gsheets.cells.Cell.{Data, JSToVector}
+import gsheets.cells.Cell.{CellValue, JSToVector}
 import gsheets.cells.{Cell, WrongDataTypeException}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -19,7 +19,7 @@ object ExportedFunctions {
     *   {number} the mean
     */
   @JSExportTopLevel("MEAN")
-  def mean(xs: js.Array[js.Array[Data]]): Double = {
+  def mean(xs: js.Array[js.Array[CellValue]]): Double = {
     val flat = xs.flatten
       .map((_: Matchable) match {
         case s: String if s == "" => 0.0
@@ -50,12 +50,12 @@ object ExportedFunctions {
     * We consider only elements that are Double by filtering on the isNumeric method.
     */
   @JSExportTopLevel("CUSTOMSUM")
-  def sum(elems: js.Array[js.Array[Data]]): Double = {
+  def sum(elems: js.Array[js.Array[CellValue]]): Double = {
     Cell.fromJSArray(elems).flatten.filter(_.isNumeric).map(_.toDouble.get).sum
   }
 
   @JSExportTopLevel("GETTYPES")
-  def types(elems: js.Array[js.Array[Data]]): js.Array[js.Array[Data]] =
+  def types(elems: js.Array[js.Array[CellValue]]): js.Array[js.Array[CellValue]] =
     elems.asScala.map(_.map(v => Cell(v.isEmpty))).toGoogleCells
 
   /** Below is an example of actually using Scala code for treating data in the
@@ -121,14 +121,16 @@ object ExportedFunctions {
     * age is at least 18.
     */
   @JSExportTopLevel("GETADULTS")
-  def adults(data: js.Array[js.Array[Data]]): js.Array[js.Array[Data]] =
+  def adults(data: js.Array[js.Array[CellValue]]): js.Array[js.Array[CellValue]] =
     Cell.fromJSArray(data).map(rowToPerson).filter(_.age >= 18).map(_.toRow).toGoogleCells
 
   /** Returns a table containing the adults whose income is above the average of income.
     * The last row also contains the average income, for reference.
     */
   @JSExportTopLevel("ABOVEINCOMEAVERAGE")
-  def aboveIncomeAverage(data: js.Array[js.Array[Data]]): js.Array[js.Array[Data]] = {
+  def aboveIncomeAverage(
+    data: js.Array[js.Array[CellValue]]
+  ): js.Array[js.Array[CellValue]] = {
     val persons = Cell.fromJSArray(data).map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)
 
@@ -205,9 +207,9 @@ object ExportedFunctions {
     */
   @JSExportTopLevel("LINEARREGRESSION")
   def linearRegression(
-    trainingDataX: js.Array[js.Array[Data]],
-    trainingDataY: js.Array[js.Array[Data]]
-  ): js.Array[js.Array[Data]] =
+    trainingDataX: js.Array[js.Array[CellValue]],
+    trainingDataY: js.Array[js.Array[CellValue]]
+  ): js.Array[js.Array[CellValue]] =
     try {
       val startTime = js.Date.now
       val result = Vector(
@@ -232,7 +234,7 @@ object ExportedFunctions {
     * sub-linear.
     */
   @JSExportTopLevel("PREDICTINCOMEATAGE")
-  def predictIncomeAtAge(data: js.Array[js.Array[Data]], age: Int): Double = {
+  def predictIncomeAtAge(data: js.Array[js.Array[CellValue]], age: Int): Double = {
     val persons = Cell.fromJSArray(data).map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)
 

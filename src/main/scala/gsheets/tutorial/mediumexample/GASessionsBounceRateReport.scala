@@ -1,6 +1,6 @@
 package gsheets.tutorial.mediumexample
 
-import gsheets.cells.Cell.Data
+import gsheets.cells.Cell.CellValue
 import gsheets.customfunctions.Decoder
 import gsheets.tutorial.mediumexample.GASessionsBounceRateReport.DataRow
 import scala.scalajs.js
@@ -11,7 +11,7 @@ import scala.scalajs.js
   *   map from the information type to the information contents.
   */
 final case class GASessionsBounceRateReport(info: Map[String, DataRow]) {
-  def row(infoType: String): js.Array[Data] = {
+  def row(infoType: String): js.Array[CellValue] = {
     val theseInfo = info(infoType)
     js.Array(
       infoType,
