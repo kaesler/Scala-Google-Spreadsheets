@@ -1,6 +1,6 @@
 package gsheets.tutorial
 
-import gsheets.cells.Cell.JSToVector
+import gsheets.cells.Cell.GridToVectors
 import gsheets.cells.{Cell, CellValue, WrongDataTypeException}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -51,12 +51,12 @@ object ExportedFunctions {
     */
   @JSExportTopLevel("CUSTOMSUM")
   def sum(elems: js.Array[js.Array[CellValue]]): Double = {
-    Cell.fromJSArray(elems).flatten.filter(_.isNumeric).map(_.toDouble.get).sum
+    Cell.fromGrid(elems).flatten.filter(_.isNumeric).map(_.toDouble.get).sum
   }
 
   @JSExportTopLevel("GETTYPES")
   def types(elems: js.Array[js.Array[CellValue]]): js.Array[js.Array[CellValue]] =
-    elems.asScala.map(_.map(v => Cell(v.isEmpty))).toGoogleCells
+    elems.asScala.map(_.map(v => Cell(v.isEmpty))).toGrid
 
   /** Below is an example of actually using Scala code for treating data in the
     * spreadsheet.
@@ -122,7 +122,7 @@ object ExportedFunctions {
     */
   @JSExportTopLevel("GETADULTS")
   def adults(data: js.Array[js.Array[CellValue]]): js.Array[js.Array[CellValue]] =
-    Cell.fromJSArray(data).map(rowToPerson).filter(_.age >= 18).map(_.toRow).toGoogleCells
+    Cell.fromGrid(data).map(rowToPerson).filter(_.age >= 18).map(_.toRow).toGrid
 
   /** Returns a table containing the adults whose income is above the average of income.
     * The last row also contains the average income, for reference.
@@ -131,14 +131,14 @@ object ExportedFunctions {
   def aboveIncomeAverage(
     data: js.Array[js.Array[CellValue]]
   ): js.Array[js.Array[CellValue]] = {
-    val persons = Cell.fromJSArray(data).map(rowToPerson)
+    val persons = Cell.fromGrid(data).map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)
 
     val incomeAverage = adults.map(_.income).sum / adults.length
 
     val adultsAboveAverage = adults.filter(_.income >= incomeAverage)
 
-    (adultsAboveAverage.map(_.toRow) :+ Vector(Cell(incomeAverage))).toGoogleCells
+    (adultsAboveAverage.map(_.toRow) :+ Vector(Cell(incomeAverage))).toGrid
   }
 
   private def scalarProd(x: Vector[Double], y: Vector[Double]): Double =
@@ -214,12 +214,12 @@ object ExportedFunctions {
       val startTime = js.Date.now
       val result = Vector(
         linearRegression(
-          Cell.fromJSArray(trainingDataX).map(_.map(_.toDouble.get)),
-          Cell.fromJSArray(trainingDataY).map(_.head.toDouble.get)
+          Cell.fromGrid(trainingDataX).map(_.map(_.toDouble.get)),
+          Cell.fromGrid(trainingDataY).map(_.head.toDouble.get)
         ).map(new Cell(_))
       )
 
-      (result :+ Vector(Cell("Time taken"), Cell(js.Date.now - startTime))).toGoogleCells
+      (result :+ Vector(Cell("Time taken"), Cell(js.Date.now - startTime))).toGrid
     } catch {
       case e: WrongDataTypeException => js.Array(js.Array(e.msg))
       case e: Throwable              => throw e
@@ -235,7 +235,7 @@ object ExportedFunctions {
     */
   @JSExportTopLevel("PREDICTINCOMEATAGE")
   def predictIncomeAtAge(data: js.Array[js.Array[CellValue]], age: Int): Double = {
-    val persons = Cell.fromJSArray(data).map(rowToPerson)
+    val persons = Cell.fromGrid(data).map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)
 
     val theta =

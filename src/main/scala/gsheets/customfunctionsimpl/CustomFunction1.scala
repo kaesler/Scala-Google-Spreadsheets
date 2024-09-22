@@ -1,15 +1,16 @@
 package gsheets.customfunctionsimpl
 
-import gsheets.customfunctions.{Decoder, Encoder, Input, Output}
+import gsheets.cells.CellValueGrid
+import gsheets.customfunctions.{Decoder, Encoder, Input}
 import scala.scalajs.js
 import scala.util.{Failure, Success}
 
 final class CustomFunction1[-T, +U](f: T => U)(
   implicit encoder: Encoder[T],
   decoder: Decoder[U]
-) extends (Input => Output) {
+) extends (Input => CellValueGrid) {
 
-  def apply(input: Input): Output = {
+  def apply(input: Input): CellValueGrid = {
     (for (arg <- encoder(input)) yield decoder(f(arg))) match {
       case Success(value) => value
       case Failure(e)     => js.Array(js.Array(e.getMessage))

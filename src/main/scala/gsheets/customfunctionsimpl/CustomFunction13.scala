@@ -1,11 +1,12 @@
 package gsheets.customfunctionsimpl
 
-import gsheets.customfunctions.{Decoder, Encoder, Input, Output}
+import gsheets.cells.CellValueGrid
+import gsheets.customfunctions.{Decoder, Encoder, Input}
 import scala.scalajs.js
 import scala.util.{Failure, Success}
 
 /** A [[CustomFunction13]] represents a Google custom function taking 13 inputs and
-  * returning an [[Output]].
+  * returning an [[CellValueGrid]].
   *
   * @param f
   *   function to apply to the transformed arguments
@@ -36,7 +37,7 @@ import scala.util.{Failure, Success}
   * @param encoder13
   *   encoder to go from Input type to type T13
   * @param decoder
-  *   decoder to go from type U to Output type
+  *   decoder to go from type U to CellValueGrid type
   * @tparam U
   *   return type
   */
@@ -85,7 +86,7 @@ final class CustomFunction13[
         Input,
         Input,
         Input
-      ) => Output
+      ) => CellValueGrid
     ) {
 
   def apply(
@@ -102,7 +103,7 @@ final class CustomFunction13[
     input11: Input,
     input12: Input,
     input13: Input
-  ): Output = {
+  ): CellValueGrid = {
     (
       for {
         arg1  <- encoder1(input1)

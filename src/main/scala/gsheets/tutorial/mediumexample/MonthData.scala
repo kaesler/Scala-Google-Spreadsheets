@@ -1,6 +1,6 @@
 package gsheets.tutorial.mediumexample
 
-import gsheets.cells.Cell.JSToVector
+import gsheets.cells.Cell.GridToVectors
 import gsheets.cells.CellValue
 import gsheets.customfunctions.Encoder
 import scala.scalajs.js

@@ -81,24 +81,22 @@ final case class Cell(value: CellValue) {
 
 object Cell {
 
-  def fromJSArray(cells: js.Array[js.Array[CellValue]]): Vector[Vector[Cell]] =
-    cells.map(fromJSFlatArray).toVector
-
-  private def toJSArray(cells: Seq[Seq[Cell]]): js.Array[js.Array[CellValue]] =
-    cells.map(_.map(_.value).toJSArray).toJSArray
+  def fromGrid(grid: CellValueGrid): Vector[Vector[Cell]] =
+    grid.map(fromJSFlatArray).toVector
 
   private def fromJSFlatArray(cells: js.Array[CellValue]): Vector[Cell] =
-    cells.toVector.map(new Cell(_))
+    cells.toVector.map(Cell.apply)
 
   // TODO: kae: extension method
-  implicit class VectorToJS(cells: Vector[Vector[Cell]]) {
-    def toGoogleCells: js.Array[js.Array[CellValue]] = toJSArray(cells)
+  implicit class VectorsToGrid(cells: Vector[Vector[Cell]]) {
+    def toGrid: js.Array[js.Array[CellValue]] =
+      cells.map(_.map(_.value).toJSArray).toJSArray
 
     def deepMap[U](f: Cell => U): Vector[Vector[U]] = cells.map(_.map(f))
   }
 
   // TODO: kae: extension method
-  implicit class JSToVector(cells: js.Array[js.Array[CellValue]]) {
-    def asScala: Vector[Vector[Cell]] = fromJSArray(cells)
+  implicit class GridToVectors(grid: CellValueGrid) {
+    def asScala: Vector[Vector[Cell]] = fromGrid(grid)
   }
 }

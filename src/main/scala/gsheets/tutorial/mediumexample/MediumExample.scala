@@ -1,6 +1,7 @@
 package gsheets.tutorial.mediumexample
 
-import gsheets.customfunctions.{Input, Output}
+import gsheets.cells.CellValueGrid
+import gsheets.customfunctions.Input
 import gsheets.customfunctionsimpl.CustomFunction2.FromFunction2
 import gsheets.tutorial.mediumexample.GASessionsBounceRateReport.{BounceRateInfo, DataRow, SessionsInfo}
 import scala.scalajs.js
@@ -80,6 +81,7 @@ object MediumExample {
 
   /** Computes the Current Month, Year to Date and Previous Month values for the given
     * data.
+    *
     * @param data
     *   matrix with four columns: date, device, sessions and bounce rate
     * @param currentMonth
@@ -87,7 +89,7 @@ object MediumExample {
     * @return
     */
   @JSExportTopLevel("GASESSIONSBOUNCERATEREPORT")
-  def jsGaSessionsBounceRateReport(data: Input, currentMonth: Input): Output =
-    (gaSessionsBounceRateReport).asCustomFunction(data, currentMonth)
+  def jsGaSessionsBounceRateReport(data: Input, currentMonth: Input): CellValueGrid =
+    gaSessionsBounceRateReport.asCustomFunction(data, currentMonth)
 
 }

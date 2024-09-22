@@ -1,7 +1,7 @@
 package gsheets.tutorial
 
 import gsheets.cells.Cell
-import gsheets.cells.Cell.VectorToJS
+import gsheets.cells.Cell.VectorsToGrid
 import gsheets.facade.googleanalyticsapi.goals.Goals
 import gsheets.facade.spreadsheetapp.SpreadsheetApp
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -47,7 +47,7 @@ object GoalsTesting {
       val range =
         SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(rangeNotation)
 
-      range.setValues(goalsWithUrl.toGoogleCells)
+      range.setValues(goalsWithUrl.toGrid)
     }
   }
 

@@ -1,7 +1,7 @@
 package gsheets.tutorial.customfunctions
 
-import gsheets.cells.Cell
-import gsheets.customfunctions.{Decoder, Input, Output}
+import gsheets.cells.{Cell, CellValueGrid}
+import gsheets.customfunctions.{Decoder, Input}
 import gsheets.customfunctionsimpl.CustomFunction1.FromFunction1
 import gsheets.customfunctionsimpl.CustomFunction2.FromFunction2
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -19,7 +19,7 @@ object CustomFunctionsAbstractionExamples {
     * The `asCustomFunction` implicit method comes from [[FromFunction1]] imported above.
     */
   @JSExportTopLevel("COUNTBIGFOO")
-  def jsCountBigFoo(input: Input): Output = (countBigFoo).asCustomFunction(input)
+  def jsCountBigFoo(input: Input): CellValueGrid = (countBigFoo).asCustomFunction(input)
 
   def sumByCategory(
     categories: Vector[Vector[String]],
@@ -35,7 +35,7 @@ object CustomFunctionsAbstractionExamples {
   }
 
   @JSExportTopLevel("SUMBYCATEGORY")
-  def jsSumByCategories(categories: Input, values: Input): Output =
+  def jsSumByCategories(categories: Input, values: Input): CellValueGrid =
     (sumByCategory).asCustomFunction(categories, values)
 
   /** Exception example. */
@@ -47,6 +47,7 @@ object CustomFunctionsAbstractionExamples {
     * The output of the function is simply the message of the exception.
     */
   @JSExportTopLevel("THROWEXCEPTION")
-  def jsThrowException(input: Input): Output = (throwException).asCustomFunction(input)
+  def jsThrowException(input: Input): CellValueGrid = (throwException)
+    .asCustomFunction(input)
 
 }

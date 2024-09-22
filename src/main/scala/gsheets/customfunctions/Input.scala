@@ -1,7 +1,7 @@
 package gsheets.customfunctions
 
-import gsheets.cells.CellValue
+import gsheets.cells.{CellValue, CellValueGrid}
 import scala.scalajs.js
 import scala.scalajs.js.|
 
-type Input = CellValue | js.Array[js.Array[CellValue]]
+type Input = CellValue | CellValueGrid
