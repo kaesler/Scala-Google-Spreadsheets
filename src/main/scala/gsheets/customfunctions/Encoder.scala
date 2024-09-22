@@ -28,31 +28,30 @@ trait Encoder[+T] {
 
 object Encoder {
 
-  implicit final val stringEncoder: Encoder[String] =
+  given Encoder[String] =
     (data: GSheetGrid) => Try(data(0)(0).toString)
 
-  implicit final val intEncoder: Encoder[Int] =
+  given Encoder[Int] =
     (data: GSheetGrid) => Try(data(0)(0).asInstanceOf[Double].toInt)
 
-  implicit final val doubleEncoder: Encoder[Double] =
+  given Encoder[Double] =
     (data: GSheetGrid) => Try(data(0)(0).asInstanceOf[Double])
 
-  implicit final val dateEncoder: Encoder[js.Date] =
+  given Encoder[js.Date] =
     (data: GSheetGrid) => Try(data(0)(0).asInstanceOf[js.Date])
 
-  implicit final val booleanEncoder: Encoder[Boolean] =
+  given Encoder[Boolean] =
     (data: GSheetGrid) => Try(data(0)(0).asInstanceOf[Boolean])
 
-  implicit final val cellsEncoder: Encoder[ScalaCellGrid] =
+  given Encoder[ScalaCellGrid] =
     (data: GSheetGrid) => Try(data.asScala)
 
-  implicit final val vectorStringEncoder: Encoder[ScalaGrid[String]] =
+  given encodeGridString: Encoder[ScalaGrid[String]] =
     (data: GSheetGrid) => Try(data.asScala.deepMap(_.toString))
 
-  implicit final val vectorIntEncoder: Encoder[ScalaGrid[Int]] =
+  given encodeGridInt: Encoder[ScalaGrid[Int]] =
     (data: GSheetGrid) => Try(data.asScala.deepMap(_.toInt.get))
 
-  implicit final val vectorTryIntEncoder: Encoder[ScalaGrid[Try[Int]]] =
+  given vectorTryIntEncoder: Encoder[ScalaGrid[Try[Int]]] =
     (data: GSheetGrid) => Try(data.asScala.deepMap(_.toInt))
-
 }
