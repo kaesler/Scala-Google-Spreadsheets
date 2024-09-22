@@ -80,6 +80,7 @@ final case class Cell(value: CellValue) {
 
 object Cell {
 
+  // TODO: wrong place
   def fromGrid(grid: CellValueGrid): Vector[Vector[Cell]] =
     grid.map(fromJSFlatArray).toVector
 
@@ -88,7 +89,7 @@ object Cell {
 
   // TODO: kae: extension method
   implicit class VectorsToGrid(cells: Vector[Vector[Cell]]) {
-    def toGrid: js.Array[js.Array[CellValue]] =
+    def toGrid: CellValueGrid =
       cells.map(_.map(_.value).toJSArray).toJSArray
 
     def deepMap[U](f: Cell => U): Vector[Vector[U]] = cells.map(_.map(f))

@@ -1,6 +1,6 @@
 package gsheets.tutorial
 
-import gsheets.cells.CellValue
+import gsheets.cells.{CellValue, CellValueGrid}
 import gsheets.facade.urlfetchservice.UrlFetchApp
 import gsheets.facade.xmlservice.XmlService
 import scala.scalajs.js
@@ -29,7 +29,7 @@ object GoogleGettingStarted {
     *   The input multiplied by 2.
     */
   @JSExportTopLevel("DOUBLE")
-  def double(xs: js.Array[js.Array[CellValue]]): js.Array[js.Array[CellValue]] =
+  def double(xs: CellValueGrid): CellValueGrid =
     xs.map(_.map(_.asInstanceOf[Double] * 2).map(_.asInstanceOf[CellValue]))
 
   /** Show the title and date for the first page of posts on the G Suite Developer blog.

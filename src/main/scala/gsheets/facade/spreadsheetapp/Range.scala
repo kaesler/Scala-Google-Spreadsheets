@@ -1,6 +1,6 @@
 package gsheets.facade.spreadsheetapp
 
-import gsheets.cells.CellValue
+import gsheets.cells.{CellValue, CellValueGrid}
 import scala.scalajs.js
 
 /** https://developers.google.com/apps-script/reference/spreadsheet/range
@@ -12,8 +12,8 @@ trait Range extends js.Object {
 
   def getValue(): CellValue = js.native
 
-  def getValues(): js.Array[js.Array[CellValue]] = js.native
+  def getValues(): CellValueGrid = js.native
 
-  def setValues(values: js.Array[js.Array[CellValue]]): Unit = js.native
+  def setValues(values: CellValueGrid): Unit = js.native
 
 }

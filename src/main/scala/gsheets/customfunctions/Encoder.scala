@@ -1,7 +1,7 @@
 package gsheets.customfunctions
 
 import gsheets.cells.Cell.*
-import gsheets.cells.{Cell, CellValue, CellValueGrid}
+import gsheets.cells.{Cell, CellValue, CellValueGrid, Grid}
 import scala.scalajs.js
 import scala.util.Try
 
@@ -20,8 +20,8 @@ trait Encoder[+T] {
   def encode(grid: CellValueGrid): Try[T]
 
   final def apply(input: Input): Try[T] = input match {
-    case input: js.Array[_] => encode(input.asInstanceOf[js.Array[js.Array[CellValue]]])
-    case input              => encode(js.Array(js.Array(input.asInstanceOf[CellValue])))
+    case input: js.Array[_] => encode(input.asInstanceOf[CellValueGrid])
+    case input              => encode(Grid.one(input.asInstanceOf[CellValue]))
   }
 
 }
