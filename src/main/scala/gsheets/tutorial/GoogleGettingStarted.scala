@@ -1,6 +1,6 @@
 package gsheets.tutorial
 
-import gsheets.cells.{CellValue, CellValueGrid, Grid}
+import gsheets.cells.{GSheetCellValue, GSheetGrid, JsGrid}
 import gsheets.facade.urlfetchservice.UrlFetchApp
 import gsheets.facade.xmlservice.XmlService
 import scala.scalajs.js
@@ -29,8 +29,8 @@ object GoogleGettingStarted {
     *   The input multiplied by 2.
     */
   @JSExportTopLevel("DOUBLE")
-  def double(xs: CellValueGrid): CellValueGrid =
-    xs.map(_.map(_.asInstanceOf[Double] * 2).map(_.asInstanceOf[CellValue]))
+  def double(xs: GSheetGrid): GSheetGrid =
+    xs.map(_.map(_.asInstanceOf[Double] * 2).map(_.asInstanceOf[GSheetCellValue]))
 
   /** Show the title and date for the first page of posts on the G Suite Developer blog.
     *
@@ -38,7 +38,7 @@ object GoogleGettingStarted {
     *   Two columns of data representing posts on the G Suite Developer blog.
     */
   @JSExportTopLevel("GETBLOGPOSTS")
-  def getBlogPosts(): Grid[String] = {
+  def getBlogPosts(): JsGrid[String] = {
 
     val url      = "https://gsuite-developers.googleblog.com/atom.xml"
     val xml      = UrlFetchApp.fetch(url).getContentText()

@@ -1,19 +1,18 @@
 package gsheets.customfunctionsimpl
 
-import gsheets.cells.CellValueGrid
+import gsheets.cells.GSheetGrid
 import gsheets.customfunctions.{Decoder, Encoder, Input}
 import scala.scalajs.js
 import scala.util.{Failure, Success}
 
 /** A [[CustomFunction2]] represents a Google custom function taking two inputs and
-  * returning an [[CellValueGrid]].
+  * returning an [[GSheetGrid]].
   *
   * @example
-  *   def foo(cells: Vector[Vector[String] ], bar: String): Int = ???
+  *   def foo(cells: ScalaGrid[String], bar: String): Int = ???
   *
   * \@JSExportTopLevel("FOO") def jsFoo(cells: Input, bar: Int): CellValueGrid = (foo
   * _).toGoogleFunction(cells, bar)
-  *
   * @param f
   *   function to apply to the transformed arguments
   * @param encoder1
@@ -33,9 +32,9 @@ final class CustomFunction2[-T1, -T2, +U](f: (T1, T2) => U)(
   implicit encoder1: Encoder[T1],
   encoder2: Encoder[T2],
   decoder: Decoder[U]
-) extends ((Input, Input) => CellValueGrid) {
+) extends ((Input, Input) => GSheetGrid) {
 
-  def apply(input1: Input, input2: Input): CellValueGrid = {
+  def apply(input1: Input, input2: Input): GSheetGrid = {
     (
       for {
         arg1 <- encoder1(input1)

@@ -9,7 +9,7 @@ import scala.util.Try
 /** A Cell is simply a wrapper for values that we get from Google SpreadSheets. As the
   * Google doc says, a value can be a String, a Number (Double), a js.Date or a Boolean.
   */
-final case class Cell(value: CellValue) {
+final case class Cell(value: GSheetCellValue) {
 
   /** Returns whether the content is a Double. */
   def isNumeric: Boolean = (value: Any).isInstanceOf[Double]
@@ -28,7 +28,7 @@ final case class Cell(value: CellValue) {
   }
 
   /** Maps the content of this cell via the function f. */
-  def map(f: CellValue => CellValue): Cell = Cell(f(value))
+  def map(f: GSheetCellValue => GSheetCellValue): Cell = Cell(f(value))
 
   /** Returns whether the cell actually contains something. */
   def nonEmpty: Boolean = !isEmpty
@@ -80,23 +80,23 @@ final case class Cell(value: CellValue) {
 
 object Cell {
 
-  // TODO: wrong place
-  def fromGrid(grid: CellValueGrid): Vector[Vector[Cell]] =
-    grid.map(fromJSFlatArray).toVector
+  // TODO: kae: asVectors extension method on CellValueGrid
+  def fromGrid(grid: GSheetGrid): ScalaCellGrid =
+    grid
+      .map(_.toVector.map(Cell.apply))
+      .toVector
 
-  private def fromJSFlatArray(cells: js.Array[CellValue]): Vector[Cell] =
-    cells.toVector.map(Cell.apply)
-
-  // TODO: kae: extension method
-  implicit class VectorsToGrid(cells: Vector[Vector[Cell]]) {
-    def toGrid: CellValueGrid =
+  implicit class VectorsToGrid(cells: ScalaCellGrid) {
+    // TODO: kae: ctor
+    def toGrid: GSheetGrid =
       cells.map(_.map(_.value).toJSArray).toJSArray
 
-    def deepMap[U](f: Cell => U): Vector[Vector[U]] = cells.map(_.map(f))
+    // TODO: extension method
+    def deepMap[U](f: Cell => U): ScalaGrid[U] = cells.map(_.map(f))
   }
 
-  // TODO: kae: extension method
-  implicit class GridToVectors(grid: CellValueGrid) {
-    def asScala: Vector[Vector[Cell]] = fromGrid(grid)
+  // TODO: kae: asVectors extension method on CellValueGrid
+  implicit class GridToVectors(grid: GSheetGrid) {
+    def asScala: ScalaCellGrid = fromGrid(grid)
   }
 }

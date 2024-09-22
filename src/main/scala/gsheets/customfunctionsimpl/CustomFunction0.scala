@@ -1,15 +1,15 @@
 package gsheets.customfunctionsimpl
 
-import gsheets.cells.CellValueGrid
+import gsheets.cells.GSheetGrid
 import gsheets.customfunctions.Decoder
 import scala.scalajs.js
 import scala.util.{Failure, Success, Try}
 
 final class CustomFunction0[+U](f: () => U)(
   implicit decoder: Decoder[U]
-) extends (() => CellValueGrid) {
+) extends (() => GSheetGrid) {
 
-  def apply(): CellValueGrid = {
+  def apply(): GSheetGrid = {
     Try(decoder(f())) match {
       case Success(value) => value
       case Failure(e)     => js.Array(js.Array(e.getMessage))

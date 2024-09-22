@@ -1,7 +1,7 @@
 package gsheets.tutorial
 
 import gsheets.cells.Cell.GridToVectors
-import gsheets.cells.{Cell, CellValue, CellValueGrid, WrongDataTypeException}
+import gsheets.cells.{Cell, GSheetCellValue, GSheetGrid, ScalaGrid, WrongDataTypeException}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 
@@ -19,7 +19,7 @@ object ExportedFunctions {
     *   {number} the mean
     */
   @JSExportTopLevel("MEAN")
-  def mean(xs: CellValueGrid): Double = {
+  def mean(xs: GSheetGrid): Double = {
     val flat = xs.flatten
       .map((_: Matchable) match {
         case s: String if s == "" => 0.0
@@ -50,12 +50,12 @@ object ExportedFunctions {
     * We consider only elements that are Double by filtering on the isNumeric method.
     */
   @JSExportTopLevel("CUSTOMSUM")
-  def sum(elems: CellValueGrid): Double = {
+  def sum(elems: GSheetGrid): Double = {
     Cell.fromGrid(elems).flatten.filter(_.isNumeric).map(_.toDouble.get).sum
   }
 
   @JSExportTopLevel("GETTYPES")
-  def types(elems: CellValueGrid): CellValueGrid =
+  def types(elems: GSheetGrid): GSheetGrid =
     elems.asScala.map(_.map(v => Cell(v.isEmpty))).toGrid
 
   /** Below is an example of actually using Scala code for treating data in the
@@ -121,14 +121,14 @@ object ExportedFunctions {
     * age is at least 18.
     */
   @JSExportTopLevel("GETADULTS")
-  def adults(data: CellValueGrid): CellValueGrid =
+  def adults(data: GSheetGrid): GSheetGrid =
     Cell.fromGrid(data).map(rowToPerson).filter(_.age >= 18).map(_.toRow).toGrid
 
   /** Returns a table containing the adults whose income is above the average of income.
     * The last row also contains the average income, for reference.
     */
   @JSExportTopLevel("ABOVEINCOMEAVERAGE")
-  def aboveIncomeAverage(data: CellValueGrid): CellValueGrid = {
+  def aboveIncomeAverage(data: GSheetGrid): GSheetGrid = {
     val persons = Cell.fromGrid(data).map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)
 
@@ -151,7 +151,7 @@ object ExportedFunctions {
       .sum / zippedTraining.length
 
   private def linearRegression(
-    trainingDataX: Vector[Vector[Double]],
+    trainingDataX: ScalaGrid[Double],
     trainingDataY: Vector[Double]
   ): Vector[Double] = {
     def trainingSetSize: Int   = trainingDataY.length
@@ -205,9 +205,9 @@ object ExportedFunctions {
     */
   @JSExportTopLevel("LINEARREGRESSION")
   def linearRegression(
-    trainingDataX: CellValueGrid,
-    trainingDataY: CellValueGrid
-  ): CellValueGrid =
+    trainingDataX: GSheetGrid,
+    trainingDataY: GSheetGrid
+  ): GSheetGrid =
     try {
       val startTime = js.Date.now
       val result = Vector(
@@ -232,7 +232,7 @@ object ExportedFunctions {
     * sub-linear.
     */
   @JSExportTopLevel("PREDICTINCOMEATAGE")
-  def predictIncomeAtAge(data: CellValueGrid, age: Int): Double = {
+  def predictIncomeAtAge(data: GSheetGrid, age: Int): Double = {
     val persons = Cell.fromGrid(data).map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)
 

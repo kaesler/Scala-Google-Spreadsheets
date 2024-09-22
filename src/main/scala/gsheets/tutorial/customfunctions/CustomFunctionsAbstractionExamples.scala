@@ -1,6 +1,6 @@
 package gsheets.tutorial.customfunctions
 
-import gsheets.cells.{Cell, CellValueGrid}
+import gsheets.cells.{Cell, GSheetGrid, ScalaCellGrid, ScalaGrid}
 import gsheets.customfunctions.{Decoder, Input}
 import gsheets.customfunctionsimpl.CustomFunction1.FromFunction1
 import gsheets.customfunctionsimpl.CustomFunction2.FromFunction2
@@ -19,12 +19,12 @@ object CustomFunctionsAbstractionExamples {
     * The `asCustomFunction` implicit method comes from [[FromFunction1]] imported above.
     */
   @JSExportTopLevel("COUNTBIGFOO")
-  def jsCountBigFoo(input: Input): CellValueGrid = (countBigFoo).asCustomFunction(input)
+  def jsCountBigFoo(input: Input): GSheetGrid = (countBigFoo).asCustomFunction(input)
 
   def sumByCategory(
-    categories: Vector[Vector[String]],
-    values: Vector[Vector[Try[Int]]]
-  ): Vector[Vector[Cell]] = {
+    categories: ScalaGrid[String],
+    values: ScalaGrid[Try[Int]]
+  ): ScalaCellGrid = {
     categories.flatten
       .zip(values.flatten)
       .filterNot(_._1.isEmpty)
@@ -35,11 +35,11 @@ object CustomFunctionsAbstractionExamples {
   }
 
   @JSExportTopLevel("SUMBYCATEGORY")
-  def jsSumByCategories(categories: Input, values: Input): CellValueGrid =
+  def jsSumByCategories(categories: Input, values: Input): GSheetGrid =
     (sumByCategory).asCustomFunction(categories, values)
 
   /** Exception example. */
-  def throwException(input: Vector[Vector[String]]): Int =
+  def throwException(input: ScalaGrid[String]): Int =
     throw new Exception("I failed!")
 
   /** Throw an exception to see how it is handled by the spreadsheet.
@@ -47,7 +47,7 @@ object CustomFunctionsAbstractionExamples {
     * The output of the function is simply the message of the exception.
     */
   @JSExportTopLevel("THROWEXCEPTION")
-  def jsThrowException(input: Input): CellValueGrid = (throwException)
+  def jsThrowException(input: Input): GSheetGrid = (throwException)
     .asCustomFunction(input)
 
 }

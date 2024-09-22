@@ -1,6 +1,6 @@
 package gsheets.tutorial.mediumexample
 
-import gsheets.cells.CellValueGrid
+import gsheets.cells.GSheetGrid
 import gsheets.customfunctions.Input
 import gsheets.customfunctionsimpl.CustomFunction2.FromFunction2
 import gsheets.tutorial.mediumexample.GASessionsBounceRateReport.{BounceRateInfo, DataRow, SessionsInfo}
@@ -89,7 +89,7 @@ object MediumExample {
     * @return
     */
   @JSExportTopLevel("GASESSIONSBOUNCERATEREPORT")
-  def jsGaSessionsBounceRateReport(data: Input, currentMonth: Input): CellValueGrid =
+  def jsGaSessionsBounceRateReport(data: Input, currentMonth: Input): GSheetGrid =
     gaSessionsBounceRateReport.asCustomFunction(data, currentMonth)
 
 }

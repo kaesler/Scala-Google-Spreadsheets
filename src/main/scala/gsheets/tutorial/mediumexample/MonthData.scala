@@ -1,7 +1,7 @@
 package gsheets.tutorial.mediumexample
 
 import gsheets.cells.Cell.GridToVectors
-import gsheets.cells.{CellValue, CellValueGrid}
+import gsheets.cells.{GSheetCellValue, GSheetGrid}
 import gsheets.customfunctions.Encoder
 import scala.scalajs.js
 import scala.util.Try
@@ -17,7 +17,7 @@ object MonthData {
 
   /** Encoder for Vector of [[MonthData]]. */
   implicit final val monthDataVectorEncoder: Encoder[Vector[MonthData]] =
-    (data: CellValueGrid) =>
+    (data: GSheetGrid) =>
       Try(
         data.asScala
           .filter(_.forall(_.nonEmpty)) // keeping only non empty rows
