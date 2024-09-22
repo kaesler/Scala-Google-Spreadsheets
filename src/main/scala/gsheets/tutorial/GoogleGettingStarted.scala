@@ -1,6 +1,6 @@
 package gsheets.tutorial
 
-import gsheets.cells.{CellValue, CellValueGrid}
+import gsheets.cells.{CellValue, CellValueGrid, Grid}
 import gsheets.facade.urlfetchservice.UrlFetchApp
 import gsheets.facade.xmlservice.XmlService
 import scala.scalajs.js
@@ -38,7 +38,7 @@ object GoogleGettingStarted {
     *   Two columns of data representing posts on the G Suite Developer blog.
     */
   @JSExportTopLevel("GETBLOGPOSTS")
-  def getBlogPosts(): js.Array[js.Array[String]] = {
+  def getBlogPosts(): Grid[String] = {
 
     val url      = "https://gsuite-developers.googleblog.com/atom.xml"
     val xml      = UrlFetchApp.fetch(url).getContentText()
