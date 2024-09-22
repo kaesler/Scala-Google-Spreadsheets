@@ -7,9 +7,12 @@ version := "0.1"
 scalaVersion := "3.5.0"
 
 val fastCompileRenderer = taskKey[File]("Return main file")
+
 lazy val fastCompileCreateFunctions =
   taskKey[Unit]("Fast compile, and adds to the compiled file the created functions")
+
 val fullCompileRenderer = taskKey[File]("Return full optimized main file")
+
 lazy val fullCompileCreateFunctions =
   taskKey[Unit]("Full compile, and adds to the compiled file the created functions")
 
@@ -235,15 +238,11 @@ def createGoogleFunctions(compiledFileDirectory: File, baseDirectory: File): Uni
 }
 
 fastCompileCreateFunctions := {
-
   createGoogleFunctions(fastCompileRenderer.value, baseDirectory.value)
-
 }
 
 fullCompileCreateFunctions := {
-
   createGoogleFunctions(fullCompileRenderer.value, baseDirectory.value)
-
 }
 
 lazy val `renderer` = project

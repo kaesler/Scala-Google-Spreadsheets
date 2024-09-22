@@ -1,7 +1,6 @@
 package cells
 
 import cells.Cell.Data
-import exceptions.WrongDataTypeException
 import scala.collection.immutable.Seq
 import scala.language.implicitConversions
 import scala.scalajs.js

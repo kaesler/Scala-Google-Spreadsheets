@@ -1,8 +1,7 @@
 package tutorial
 
-import cells.Cell
+import cells.{Cell, WrongDataTypeException}
 import cells.Cell.*
-import exceptions.WrongDataTypeException
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 
