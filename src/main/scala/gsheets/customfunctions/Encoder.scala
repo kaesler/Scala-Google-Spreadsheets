@@ -1,7 +1,7 @@
 package gsheets.customfunctions
 
-import gsheets.cells.Cell.*
-import gsheets.cells.{Cell, GSheetCellValue, GSheetGrid, JsGrid, ScalaCellGrid, ScalaGrid}
+import gsheets.cells.*
+import gsheets.cells.GridExtensions.*
 import scala.scalajs.js
 import scala.util.Try
 

@@ -1,6 +1,6 @@
 package gsheets.tutorial
 
-import gsheets.cells.Cell.GridToVectors
+import gsheets.cells.GridExtensions.*
 import gsheets.cells.{Cell, GSheetCellValue, GSheetGrid, ScalaGrid, WrongDataTypeException}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -51,12 +51,15 @@ object ExportedFunctions {
     */
   @JSExportTopLevel("CUSTOMSUM")
   def sum(elems: GSheetGrid): Double = {
-    Cell.fromGrid(elems).flatten.filter(_.isNumeric).map(_.toDouble.get).sum
+    elems.asScala.flatten
+      .filter(_.isNumeric)
+      .map(_.toDouble.get)
+      .sum
   }
 
   @JSExportTopLevel("GETTYPES")
   def types(elems: GSheetGrid): GSheetGrid =
-    elems.asScala.map(_.map(v => Cell(v.isEmpty))).toGrid
+    elems.asScala.map(_.map(v => Cell(v.isEmpty))).asGSheet
 
   /** Below is an example of actually using Scala code for treating data in the
     * spreadsheet.
@@ -122,21 +125,25 @@ object ExportedFunctions {
     */
   @JSExportTopLevel("GETADULTS")
   def adults(data: GSheetGrid): GSheetGrid =
-    Cell.fromGrid(data).map(rowToPerson).filter(_.age >= 18).map(_.toRow).toGrid
+    data.asScala
+      .map(rowToPerson)
+      .filter(_.age >= 18)
+      .map(_.toRow)
+      .asGSheet
 
   /** Returns a table containing the adults whose income is above the average of income.
     * The last row also contains the average income, for reference.
     */
   @JSExportTopLevel("ABOVEINCOMEAVERAGE")
   def aboveIncomeAverage(data: GSheetGrid): GSheetGrid = {
-    val persons = Cell.fromGrid(data).map(rowToPerson)
+    val persons = data.asScala.map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)
 
     val incomeAverage = adults.map(_.income).sum / adults.length
 
     val adultsAboveAverage = adults.filter(_.income >= incomeAverage)
 
-    (adultsAboveAverage.map(_.toRow) :+ Vector(Cell(incomeAverage))).toGrid
+    (adultsAboveAverage.map(_.toRow) :+ Vector(Cell(incomeAverage))).asGSheet
   }
 
   private def scalarProd(x: Vector[Double], y: Vector[Double]): Double =
@@ -212,12 +219,12 @@ object ExportedFunctions {
       val startTime = js.Date.now
       val result = Vector(
         linearRegression(
-          Cell.fromGrid(trainingDataX).map(_.map(_.toDouble.get)),
-          Cell.fromGrid(trainingDataY).map(_.head.toDouble.get)
+          trainingDataX.asScala.map(_.map(_.toDouble.get)),
+          trainingDataY.asScala.map(_.head.toDouble.get)
         ).map(new Cell(_))
       )
 
-      (result :+ Vector(Cell("Time taken"), Cell(js.Date.now - startTime))).toGrid
+      (result :+ Vector(Cell("Time taken"), Cell(js.Date.now - startTime))).asGSheet
     } catch {
       case e: WrongDataTypeException => js.Array(js.Array(e.msg))
       case e: Throwable              => throw e
@@ -233,7 +240,7 @@ object ExportedFunctions {
     */
   @JSExportTopLevel("PREDICTINCOMEATAGE")
   def predictIncomeAtAge(data: GSheetGrid, age: Int): Double = {
-    val persons = Cell.fromGrid(data).map(rowToPerson)
+    val persons = data.asScala.map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)
 
     val theta =

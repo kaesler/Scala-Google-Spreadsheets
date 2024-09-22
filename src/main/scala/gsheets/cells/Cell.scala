@@ -77,26 +77,3 @@ final case class Cell(value: GSheetCellValue) {
 
   override def toString: String = value.toString
 }
-
-object Cell {
-
-  // TODO: kae: asVectors extension method on CellValueGrid
-  def fromGrid(grid: GSheetGrid): ScalaCellGrid =
-    grid
-      .map(_.toVector.map(Cell.apply))
-      .toVector
-
-  implicit class VectorsToGrid(cells: ScalaCellGrid) {
-    // TODO: kae: ctor
-    def toGrid: GSheetGrid =
-      cells.map(_.map(_.value).toJSArray).toJSArray
-
-    // TODO: extension method
-    def deepMap[U](f: Cell => U): ScalaGrid[U] = cells.map(_.map(f))
-  }
-
-  // TODO: kae: asVectors extension method on CellValueGrid
-  implicit class GridToVectors(grid: GSheetGrid) {
-    def asScala: ScalaCellGrid = fromGrid(grid)
-  }
-}

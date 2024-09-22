@@ -1,7 +1,7 @@
 package gsheets.tutorial.customfunctions
 
-import gsheets.cells.Cell.GridToVectors
 import gsheets.cells.GSheetGrid
+import gsheets.cells.GridExtensions.*
 import gsheets.customfunctions.Encoder
 import scala.util.Try
 
