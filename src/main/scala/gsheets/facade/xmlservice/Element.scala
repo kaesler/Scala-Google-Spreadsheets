@@ -3,7 +3,7 @@ package gsheets.facade.xmlservice
 import scala.scalajs.js
 
 @js.native
-trait Element extends js.Object {
+trait Element extends js.Object:
 
   def getChild(name: String = null, namespace: Namespace = null): Element = js.native
 
@@ -13,5 +13,3 @@ trait Element extends js.Object {
   def getText(): String = js.native
 
   def getValue(): String = js.native
-
-}

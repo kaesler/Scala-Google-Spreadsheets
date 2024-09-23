@@ -10,14 +10,13 @@ import scala.scalajs.js
   * @tparam U
   *   type to decode as an [[GSheetGrid]]
   */
-trait Decoder[-U] {
+trait Decoder[-U]:
 
   def decodeU(u: U): GSheetGrid
 
   final def apply(u: U): GSheetGrid = decodeU(u)
-}
 
-object Decoder {
+object Decoder:
 
   given Decoder[GSheetGrid]    = (u: GSheetGrid) => u
   given Decoder[ScalaCellGrid] = (u: ScalaCellGrid) => u.asGSheet
@@ -26,4 +25,3 @@ object Decoder {
   given Decoder[Int]           = (u: Int) => GSheetGrid.one(u)
   given Decoder[js.Date]       = (u: js.Date) => GSheetGrid.one(u)
   given Decoder[Boolean]       = (u: Boolean) => GSheetGrid.one(u)
-}

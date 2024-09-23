@@ -6,7 +6,7 @@ import scala.scalajs.js.annotation.JSGlobal
 /** https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/goals
   */
 @js.native
-trait Goals extends js.Object {
+trait Goals extends js.Object:
   val accountId: String = js.native
 
   val active: Boolean = js.native
@@ -30,15 +30,11 @@ trait Goals extends js.Object {
 
   val urlDestinationDetails: UrlDestinationDetails = js.native
 
-}
-
 @js.native
 @JSGlobal("Analytics.Management.Goals")
-object Goals extends js.Object {
+object Goals extends js.Object:
 
   /** https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/goals/list
     */
   def list(accountId: String, webPropertyId: String, profileId: String): ListResponse =
     js.native
-
-}

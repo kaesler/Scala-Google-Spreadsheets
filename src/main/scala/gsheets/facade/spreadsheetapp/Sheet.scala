@@ -7,7 +7,7 @@ import scala.scalajs.js
 /** https://developers.google.com/apps-script/reference/spreadsheet/sheet
   */
 @js.native
-trait Sheet extends js.Object {
+trait Sheet extends js.Object:
 
   def getName(): String = js.native
 
@@ -18,5 +18,3 @@ trait Sheet extends js.Object {
   def insertChart(chart: EmbeddedChart): Unit = js.native
 
   def newChart(): EmbeddedChartBuilder = js.native
-
-}

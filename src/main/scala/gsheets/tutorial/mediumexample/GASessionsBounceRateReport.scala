@@ -10,8 +10,8 @@ import scala.scalajs.js
   * @param info
   *   map from the information type to the information contents.
   */
-final case class GASessionsBounceRateReport(info: Map[String, DataRow]) {
-  def row(infoType: String): js.Array[GSheetCellValue] = {
+final case class GASessionsBounceRateReport(info: Map[String, DataRow]):
+  def row(infoType: String): js.Array[GSheetCellValue] =
     val theseInfo = info(infoType)
     js.Array(
       infoType,
@@ -24,14 +24,11 @@ final case class GASessionsBounceRateReport(info: Map[String, DataRow]) {
       theseInfo.bounceRateInto.mobile,
       theseInfo.bounceRateInto.global
     )
-  }
-}
 
-object GASessionsBounceRateReport {
+object GASessionsBounceRateReport:
 
-  final case class SessionsInfo(mobile: Int, desktop: Int, tablet: Int) {
+  final case class SessionsInfo(mobile: Int, desktop: Int, tablet: Int):
     def total: Int = mobile + desktop + tablet
-  }
 
   /** We include the global value here since it has to be a weighted average and the info
     * aren't there.
@@ -64,5 +61,3 @@ object GASessionsBounceRateReport {
         u.row("Previous Month"),
         u.row("Year to Date")
       )
-
-}

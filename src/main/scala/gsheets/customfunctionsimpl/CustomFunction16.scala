@@ -102,7 +102,7 @@ final class CustomFunction16[
         Input,
         Input
       ) => GSheetGrid
-    ) {
+    ):
 
   def apply(
     input1: Input,
@@ -121,9 +121,9 @@ final class CustomFunction16[
     input14: Input,
     input15: Input,
     input16: Input
-  ): GSheetGrid = {
+  ): GSheetGrid =
     (
-      for {
+      for
         arg1  <- encoder1(input1)
         arg2  <- encoder2(input2)
         arg3  <- encoder3(input3)
@@ -158,11 +158,7 @@ final class CustomFunction16[
           arg15,
           arg16
         )
-      } yield decoder(output)
-    ) match {
+      yield decoder(output)
+    ) match
       case Success(value)     => value
       case Failure(exception) => js.Array(js.Array(exception.getMessage))
-    }
-  }
-
-}

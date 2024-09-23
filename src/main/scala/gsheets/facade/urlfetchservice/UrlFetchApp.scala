@@ -5,8 +5,6 @@ import scala.scalajs.js.annotation.JSGlobal
 
 @js.native
 @JSGlobal("UrlFetchApp")
-object UrlFetchApp extends js.Object {
+object UrlFetchApp extends js.Object:
 
   def fetch(url: String): HTTPResponse = js.native
-
-}

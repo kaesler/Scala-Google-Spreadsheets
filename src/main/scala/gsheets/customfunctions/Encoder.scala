@@ -15,18 +15,15 @@ import scala.util.Try
   * @tparam T
   *   output type of this encoder.
   */
-trait Encoder[+T] {
+trait Encoder[+T]:
 
   def encode(grid: GSheetGrid): Try[T]
 
-  final def apply(input: Input): Try[T] = input match {
+  final def apply(input: Input): Try[T] = input match
     case input: js.Array[_] => encode(input.asInstanceOf[GSheetGrid])
     case input              => encode(JsGrid.one(input.asInstanceOf[GSheetCellValue]))
-  }
 
-}
-
-object Encoder {
+object Encoder:
 
   given Encoder[String] =
     (data: GSheetGrid) => Try(data(0)(0).toString)
@@ -54,4 +51,3 @@ object Encoder {
 
   given vectorTryIntEncoder: Encoder[ScalaGrid[Try[Int]]] =
     (data: GSheetGrid) => Try(data.asScala.deepMap(_.toInt))
-}

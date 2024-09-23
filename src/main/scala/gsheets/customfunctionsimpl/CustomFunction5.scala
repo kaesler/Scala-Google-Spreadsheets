@@ -32,7 +32,7 @@ final class CustomFunction5[-T1, -T2, -T3, -T4, -T5, +U](f: (T1, T2, T3, T4, T5)
   encoder4: Encoder[T4],
   encoder5: Encoder[T5],
   decoder: Decoder[U]
-) extends ((Input, Input, Input, Input, Input) => GSheetGrid) {
+) extends ((Input, Input, Input, Input, Input) => GSheetGrid):
 
   def apply(
     input1: Input,
@@ -40,20 +40,16 @@ final class CustomFunction5[-T1, -T2, -T3, -T4, -T5, +U](f: (T1, T2, T3, T4, T5)
     input3: Input,
     input4: Input,
     input5: Input
-  ): GSheetGrid = {
+  ): GSheetGrid =
     (
-      for {
+      for
         arg1 <- encoder1(input1)
         arg2 <- encoder2(input2)
         arg3 <- encoder3(input3)
         arg4 <- encoder4(input4)
         arg5 <- encoder5(input5)
         output = f(arg1, arg2, arg3, arg4, arg5)
-      } yield decoder(output)
-    ) match {
+      yield decoder(output)
+    ) match
       case Success(value)     => value
       case Failure(exception) => js.Array(js.Array(exception.getMessage))
-    }
-  }
-
-}

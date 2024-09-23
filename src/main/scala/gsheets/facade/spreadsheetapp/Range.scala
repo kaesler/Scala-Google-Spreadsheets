@@ -6,7 +6,7 @@ import scala.scalajs.js
 /** https://developers.google.com/apps-script/reference/spreadsheet/range
   */
 @js.native
-trait Range extends js.Object {
+trait Range extends js.Object:
 
   def getCell(row: Int, column: Int): Range = js.native
 
@@ -15,5 +15,3 @@ trait Range extends js.Object {
   def getValues(): GSheetGrid = js.native
 
   def setValues(values: GSheetGrid): Unit = js.native
-
-}

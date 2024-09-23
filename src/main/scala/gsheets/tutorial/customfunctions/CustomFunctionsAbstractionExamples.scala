@@ -6,7 +6,7 @@ import gsheets.customfunctionsimpl.Syntax.*
 import scala.scalajs.js.annotation.JSExportTopLevel
 import scala.util.Try
 
-object CustomFunctionsAbstractionExamples {
+object CustomFunctionsAbstractionExamples:
 
   /** Counts the number of [[Foo]] for which `babar` is bigger than 10. */
   private def countBigFoo(foos: Vector[Foo]): Int = foos.count(_.babar > 10)
@@ -21,7 +21,7 @@ object CustomFunctionsAbstractionExamples {
   private def sumByCategory(
     categories: ScalaGrid[String],
     values: ScalaGrid[Try[Int]]
-  ): ScalaCellGrid = {
+  ): ScalaCellGrid =
     categories.flatten
       .zip(values.flatten)
       .filterNot(_._1.isEmpty)
@@ -29,7 +29,6 @@ object CustomFunctionsAbstractionExamples {
       .groupMapReduce(_._1)(_._2)(_ + _)
       .toVector
       .map { case (cat, value) => Vector(Cell(cat), Cell(value)) }
-  }
 
   @JSExportTopLevel("SUMBYCATEGORY")
   def jsSumByCategories(categories: Input, values: Input): GSheetGrid =
@@ -46,5 +45,3 @@ object CustomFunctionsAbstractionExamples {
   @JSExportTopLevel("THROWEXCEPTION")
   def jsThrowException(input: Input): GSheetGrid =
     throwException.asCustomFunction(input)
-
-}

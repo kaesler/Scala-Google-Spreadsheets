@@ -32,19 +32,15 @@ final class CustomFunction2[-T1, -T2, +U](f: (T1, T2) => U)(
   using encoder1: Encoder[T1],
   encoder2: Encoder[T2],
   decoder: Decoder[U]
-) extends ((Input, Input) => GSheetGrid) {
+) extends ((Input, Input) => GSheetGrid):
 
-  def apply(input1: Input, input2: Input): GSheetGrid = {
+  def apply(input1: Input, input2: Input): GSheetGrid =
     (
-      for {
+      for
         arg1 <- encoder1(input1)
         arg2 <- encoder2(input2)
         output = f(arg1, arg2)
-      } yield decoder(output)
-    ) match {
+      yield decoder(output)
+    ) match
       case Success(value)     => value
       case Failure(exception) => js.Array(js.Array(exception.getMessage))
-    }
-  }
-
-}

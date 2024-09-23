@@ -3,7 +3,7 @@ package gsheets.facade.googleanalyticsapi.goals
 import scala.scalajs.js
 
 @js.native
-trait EventCondition extends js.Object {
+trait EventCondition extends js.Object:
 
   /** Type of comparison. Possible values are LESS_THAN, GREATER_THAN or EQUAL.
     */
@@ -25,5 +25,3 @@ trait EventCondition extends js.Object {
   /** Type of this event condition. Possible values are CATEGORY, ACTION, LABEL, or VALUE.
     */
   val `type`: String = js.native
-
-}

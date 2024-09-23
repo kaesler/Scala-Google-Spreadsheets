@@ -16,7 +16,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
   * The DOUBLE function in the page is designed for both js.Array[js.Array[Data] ] and
   * Data. In our case, we need two overloaded methods.
   */
-object GoogleGettingStarted {
+object GoogleGettingStarted:
 
   @JSExportTopLevel("DOUBLE")
   def double(x: Double): Double = 2 * x
@@ -38,7 +38,7 @@ object GoogleGettingStarted {
     *   Two columns of data representing posts on the G Suite Developer blog.
     */
   @JSExportTopLevel("GETBLOGPOSTS")
-  def getBlogPosts(): JsGrid[String] = {
+  def getBlogPosts(): JsGrid[String] =
 
     val url      = "https://gsuite-developers.googleblog.com/atom.xml"
     val xml      = UrlFetchApp.fetch(url).getContentText()
@@ -54,7 +54,3 @@ object GoogleGettingStarted {
         element.getChild("published", atom).getValue()
       )
     )
-
-  }
-
-}

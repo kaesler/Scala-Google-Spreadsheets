@@ -3,7 +3,7 @@ package gsheets.facade.googleanalyticsapi.goals
 import scala.scalajs.js
 
 @js.native
-trait ListResponse extends js.Object {
+trait ListResponse extends js.Object:
 
   val kind: String = js.native
 
@@ -20,5 +20,3 @@ trait ListResponse extends js.Object {
   val nextLink: String = js.native
 
   val items: js.Array[Goals] = js.native
-
-}

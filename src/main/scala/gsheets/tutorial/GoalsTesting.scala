@@ -6,7 +6,7 @@ import gsheets.facade.googleanalyticsapi.goals.Goals
 import gsheets.facade.spreadsheetapp.SpreadsheetApp
 import scala.scalajs.js.annotation.JSExportTopLevel
 
-object GoalsTesting {
+object GoalsTesting:
 
   /** Finds all Google Analytics goals of all of your accounts and list them in the active
     * sheet.
@@ -18,7 +18,7 @@ object GoalsTesting {
     * https://developers.google.com/analytics/solutions/articles/reporting-apps-script
     */
   @JSExportTopLevel("findListOfGoals")
-  def findListOfGoals(): Unit = {
+  def findListOfGoals(): Unit =
     val listResponse = Goals.list("~all", "~all", "~all")
 
     val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -26,7 +26,7 @@ object GoalsTesting {
     val goalsWithUrl = listResponse.items
       .filter(_.`type` == "URL_DESTINATION")
       .toVector
-      .map(goal => {
+      .map(goal =>
         Vector(
           Cell(goal.id),
           Cell(goal.name),
@@ -38,7 +38,7 @@ object GoalsTesting {
           Cell(goal.created),
           Cell(goal.kind)
         )
-      })
+      )
 
     if (goalsWithUrl.nonEmpty) {
       val rangeNotation =
@@ -49,6 +49,3 @@ object GoalsTesting {
 
       range.setValues(goalsWithUrl.asGSheet)
     }
-  }
-
-}

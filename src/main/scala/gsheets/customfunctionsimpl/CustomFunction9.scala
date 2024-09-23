@@ -48,7 +48,7 @@ final class CustomFunction9[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, -T9, +U](
   decoder: Decoder[U]
 ) extends (
       (Input, Input, Input, Input, Input, Input, Input, Input, Input) => GSheetGrid
-    ) {
+    ):
 
   def apply(
     input1: Input,
@@ -60,9 +60,9 @@ final class CustomFunction9[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, -T9, +U](
     input7: Input,
     input8: Input,
     input9: Input
-  ): GSheetGrid = {
+  ): GSheetGrid =
     (
-      for {
+      for
         arg1 <- encoder1(input1)
         arg2 <- encoder2(input2)
         arg3 <- encoder3(input3)
@@ -73,11 +73,7 @@ final class CustomFunction9[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, -T9, +U](
         arg8 <- encoder8(input8)
         arg9 <- encoder9(input9)
         output = f(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
-      } yield decoder(output)
-    ) match {
+      yield decoder(output)
+    ) match
       case Success(value)     => value
       case Failure(exception) => js.Array(js.Array(exception.getMessage))
-    }
-  }
-
-}

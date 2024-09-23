@@ -7,7 +7,7 @@ import scala.scalajs.js
 /** https://developers.google.com/apps-script/reference/spreadsheet/embedded-chart-builder
   */
 @js.native
-trait EmbeddedChartBuilder extends js.Object {
+trait EmbeddedChartBuilder extends js.Object:
 
   def addRange(range: Range): this.type = js.native
 
@@ -27,5 +27,3 @@ trait EmbeddedChartBuilder extends js.Object {
   ): this.type = js.native
 
   def setTitle(title: String): this.type = js.native
-
-}

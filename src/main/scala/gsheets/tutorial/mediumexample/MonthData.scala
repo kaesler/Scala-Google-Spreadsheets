@@ -13,7 +13,7 @@ final case class MonthData(
   bounceRate: Double
 )
 
-object MonthData {
+object MonthData:
 
   given Encoder[Vector[MonthData]] =
     (data: GSheetGrid) =>
@@ -29,5 +29,3 @@ object MonthData {
             )
           )
       )
-
-}

@@ -9,7 +9,7 @@ import scala.scalajs.js
 import scala.scalajs.js.Date
 import scala.scalajs.js.annotation.JSExportTopLevel
 
-object MediumExample {
+object MediumExample:
 
   given Ordering[Date] with
     def compare(date: Date, that: Date): Int = {
@@ -21,7 +21,7 @@ object MediumExample {
   def gaSessionsBounceRateReport(
     data: Vector[MonthData],
     currentMonth: js.Date
-  ): GASessionsBounceRateReport = {
+  ): GASessionsBounceRateReport =
     def betweenDates(
       from: js.Date,
       to: js.Date,
@@ -37,19 +37,18 @@ object MediumExample {
     val currentMonthData  = betweenDates(currentMonth, currentMonth, data)
     val previousMonthData = betweenDates(previousMonth, previousMonth, data)
 
-    def sessionInfo(d: Vector[MonthData]): SessionsInfo = {
+    def sessionInfo(d: Vector[MonthData]): SessionsInfo =
       val agg = d.groupMapReduce(_.device.toLowerCase)(_.sessions)(_ + _)
       SessionsInfo(
         agg.getOrElse("mobile", 0),
         agg.getOrElse("desktop", 0),
         agg.getOrElse("tablet", 0)
       )
-    }
 
     def bounceRateInfo(
       d: Vector[MonthData],
       sessionsInfo: SessionsInfo
-    ): BounceRateInfo = {
+    ): BounceRateInfo =
       val agg =
         d.groupMapReduce(_.device.toLowerCase)(r => r.sessions * r.bounceRate)(_ + _)
       BounceRateInfo(
@@ -58,7 +57,6 @@ object MediumExample {
         agg.getOrElse("tablet", 0.0) / sessionsInfo.tablet,
         agg.values.sum / sessionsInfo.total
       )
-    }
 
     val currentMonthSessions    = sessionInfo(currentMonthData)
     val currentMonthBounceRates = bounceRateInfo(currentMonthData, currentMonthSessions)
@@ -77,7 +75,6 @@ object MediumExample {
         "Year to Date"   -> DataRow(ytdSessions, ytdBounceRates)
       )
     )
-  }
 
   /** Computes the Current Month, Year to Date and Previous Month values for the given
     * data.
@@ -91,5 +88,3 @@ object MediumExample {
   @JSExportTopLevel("GASESSIONSBOUNCERATEREPORT")
   def jsGaSessionsBounceRateReport(data: Input, currentMonth: Input): GSheetGrid =
     gaSessionsBounceRateReport.asCustomFunction(data, currentMonth)
-
-}

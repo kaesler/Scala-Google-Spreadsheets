@@ -29,21 +29,17 @@ final class CustomFunction4[-T1, -T2, -T3, -T4, +U](f: (T1, T2, T3, T4) => U)(
   encoder3: Encoder[T3],
   encoder4: Encoder[T4],
   decoder: Decoder[U]
-) extends ((Input, Input, Input, Input) => GSheetGrid) {
+) extends ((Input, Input, Input, Input) => GSheetGrid):
 
-  def apply(input1: Input, input2: Input, input3: Input, input4: Input): GSheetGrid = {
+  def apply(input1: Input, input2: Input, input3: Input, input4: Input): GSheetGrid =
     (
-      for {
+      for
         arg1 <- encoder1(input1)
         arg2 <- encoder2(input2)
         arg3 <- encoder3(input3)
         arg4 <- encoder4(input4)
         output = f(arg1, arg2, arg3, arg4)
-      } yield decoder(output)
-    ) match {
+      yield decoder(output)
+    ) match
       case Success(value)     => value
       case Failure(exception) => js.Array(js.Array(exception.getMessage))
-    }
-  }
-
-}
