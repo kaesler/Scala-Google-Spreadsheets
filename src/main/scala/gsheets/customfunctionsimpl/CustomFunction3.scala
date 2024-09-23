@@ -46,14 +46,6 @@ final class CustomFunction3[-T1, -T2, -T3, +U](f: (T1, T2, T3) => U)(
 
 object CustomFunction3 {
 
-  def apply[T1, T2, T3, U](f: (T1, T2, T3) => U)(
-    using Encoder[T1],
-    Encoder[T2],
-    Encoder[T3],
-    Decoder[U]
-  ): CustomFunction3[T1, T2, T3, U] =
-    new CustomFunction3(f)
-
   implicit final class FromFunction3[-T1, -T2, -T3, +U](
     f: (T1, T2, T3) => U
   )(

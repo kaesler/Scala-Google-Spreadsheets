@@ -153,27 +153,6 @@ final class CustomFunction14[
 
 object CustomFunction14 {
 
-  def apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, U](
-    f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14) => U
-  )(
-    using Encoder[T1],
-    Encoder[T2],
-    Encoder[T3],
-    Encoder[T4],
-    Encoder[T5],
-    Encoder[T6],
-    Encoder[T7],
-    Encoder[T8],
-    Encoder[T9],
-    Encoder[T10],
-    Encoder[T11],
-    Encoder[T12],
-    Encoder[T13],
-    Encoder[T14],
-    Decoder[U]
-  ): CustomFunction14[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, U] =
-    new CustomFunction14(f)
-
   implicit final class FromFunction14[
     -T1,
     -T2,
