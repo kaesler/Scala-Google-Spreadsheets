@@ -18,13 +18,3 @@ final class CustomFunction1[-T, +U](f: T => U)(
   }
 
 }
-
-object CustomFunction1 {
-
-  implicit final class FromFunction1[-T, +U](f: T => U)(
-    using Encoder[T],
-    Decoder[U]
-  ) {
-    def asCustomFunction: CustomFunction1[T, U] = CustomFunction1(f)
-  }
-}

@@ -17,9 +17,3 @@ final class CustomFunction0[+U](f: () => U)(
       )
   }
 }
-
-object CustomFunction0 {
-
-  extension [U: Decoder](f: () => U)
-    def asCustomFunction: CustomFunction0[U] = CustomFunction0(f)
-}

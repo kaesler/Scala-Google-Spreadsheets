@@ -2,7 +2,7 @@ package gsheets.tutorial.mediumexample
 
 import gsheets.cells.GSheetGrid
 import gsheets.customfunctions.Input
-import gsheets.customfunctionsimpl.CustomFunction2.FromFunction2
+import gsheets.customfunctionsimpl.Syntax.*
 import gsheets.tutorial.mediumexample.GASessionsBounceRateReport.{BounceRateInfo, DataRow, SessionsInfo}
 import scala.scalajs.js
 import scala.scalajs.js.Date

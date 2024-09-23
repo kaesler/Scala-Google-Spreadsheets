@@ -47,19 +47,3 @@ final class CustomFunction4[-T1, -T2, -T3, -T4, +U](f: (T1, T2, T3, T4) => U)(
   }
 
 }
-
-object CustomFunction4 {
-
-  implicit final class FromFunction4[-T1, -T2, -T3, -T4, +U](
-    f: (T1, T2, T3, T4) => U
-  )(
-    using Encoder[T1],
-    Encoder[T2],
-    Encoder[T3],
-    Encoder[T4],
-    Decoder[U]
-  ) {
-    def asCustomFunction: CustomFunction4[T1, T2, T3, T4, U] = CustomFunction4(f)
-  }
-
-}

@@ -2,8 +2,7 @@ package gsheets.tutorial.customfunctions
 
 import gsheets.cells.{Cell, GSheetGrid, ScalaCellGrid, ScalaGrid}
 import gsheets.customfunctions.{Decoder, Input}
-import gsheets.customfunctionsimpl.CustomFunction1.FromFunction1
-import gsheets.customfunctionsimpl.CustomFunction2.FromFunction2
+import gsheets.customfunctionsimpl.Syntax.*
 import scala.scalajs.js.annotation.JSExportTopLevel
 import scala.util.Try
 
@@ -36,7 +35,7 @@ object CustomFunctionsAbstractionExamples {
 
   @JSExportTopLevel("SUMBYCATEGORY")
   def jsSumByCategories(categories: Input, values: Input): GSheetGrid =
-    (sumByCategory).asCustomFunction(categories, values)
+    sumByCategory.asCustomFunction(categories, values)
 
   /** Exception example. */
   def throwException(input: ScalaGrid[String]): Int =

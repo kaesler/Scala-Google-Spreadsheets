@@ -41,20 +41,4 @@ final class CustomFunction3[-T1, -T2, -T3, +U](f: (T1, T2, T3) => U)(
       case Failure(exception) => js.Array(js.Array(exception.getMessage))
     }
   }
-
-}
-
-object CustomFunction3 {
-
-  implicit final class FromFunction3[-T1, -T2, -T3, +U](
-    f: (T1, T2, T3) => U
-  )(
-    using Encoder[T1],
-    Encoder[T2],
-    Encoder[T3],
-    Decoder[U]
-  ) {
-    def asCustomFunction: CustomFunction3[T1, T2, T3, U] = CustomFunction3(f)
-  }
-
 }
