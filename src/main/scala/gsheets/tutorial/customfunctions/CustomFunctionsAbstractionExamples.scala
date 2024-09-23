@@ -9,18 +9,16 @@ import scala.util.Try
 object CustomFunctionsAbstractionExamples {
 
   /** Counts the number of [[Foo]] for which `babar` is bigger than 10. */
-  def countBigFoo(foos: Vector[Foo]): Int = foos.count(_.babar > 10)
+  private def countBigFoo(foos: Vector[Foo]): Int = foos.count(_.babar > 10)
 
   /** Export the custom function for google sheets. The encoder for vectors of [[Foo]] is
     * defined above, and the decoder for Int is defined in the companion object of the
     * [[Decoder]] trait.
-    *
-    * The `asCustomFunction` implicit method comes from [[FromFunction1]] imported above.
     */
   @JSExportTopLevel("COUNTBIGFOO")
-  def jsCountBigFoo(input: Input): GSheetGrid = (countBigFoo).asCustomFunction(input)
+  def jsCountBigFoo(input: Input): GSheetGrid = countBigFoo.asCustomFunction(input)
 
-  def sumByCategory(
+  private def sumByCategory(
     categories: ScalaGrid[String],
     values: ScalaGrid[Try[Int]]
   ): ScalaCellGrid = {
@@ -46,7 +44,7 @@ object CustomFunctionsAbstractionExamples {
     * The output of the function is simply the message of the exception.
     */
   @JSExportTopLevel("THROWEXCEPTION")
-  def jsThrowException(input: Input): GSheetGrid = (throwException)
-    .asCustomFunction(input)
+  def jsThrowException(input: Input): GSheetGrid =
+    throwException.asCustomFunction(input)
 
 }
