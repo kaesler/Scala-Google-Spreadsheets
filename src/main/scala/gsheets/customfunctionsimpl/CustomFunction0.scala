@@ -25,10 +25,6 @@ object CustomFunction0 {
   ): CustomFunction0[U] =
     new CustomFunction0(f)
 
-  implicit final class FromFunction0[+U](f: () => U)(
-    using Decoder[U]
-  ) {
+  extension[U: Decoder] (f: () => U)
     def asCustomFunction: CustomFunction0[U] = CustomFunction0(f)
-  }
-
 }
