@@ -26,7 +26,7 @@ import scala.util.{Failure, Success}
   *   return type
   */
 final class CustomFunction5[-T1, -T2, -T3, -T4, -T5, +U](f: (T1, T2, T3, T4, T5) => U)(
-  implicit encoder1: Encoder[T1],
+  using encoder1: Encoder[T1],
   encoder2: Encoder[T2],
   encoder3: Encoder[T3],
   encoder4: Encoder[T4],
@@ -61,24 +61,24 @@ final class CustomFunction5[-T1, -T2, -T3, -T4, -T5, +U](f: (T1, T2, T3, T4, T5)
 object CustomFunction5 {
 
   def apply[T1, T2, T3, T4, T5, U](f: (T1, T2, T3, T4, T5) => U)(
-    implicit encoder1: Encoder[T1],
-    encoder2: Encoder[T2],
-    encoder3: Encoder[T3],
-    encoder4: Encoder[T4],
-    encoder5: Encoder[T5],
-    decoder: Decoder[U]
+    using Encoder[T1],
+    Encoder[T2],
+    Encoder[T3],
+    Encoder[T4],
+    Encoder[T5],
+    Decoder[U]
   ): CustomFunction5[T1, T2, T3, T4, T5, U] =
     new CustomFunction5(f)
 
   implicit final class FromFunction5[-T1, -T2, -T3, -T4, -T5, +U](
     f: (T1, T2, T3, T4, T5) => U
   )(
-    implicit encoder1: Encoder[T1],
-    encoder2: Encoder[T2],
-    encoder3: Encoder[T3],
-    encoder4: Encoder[T4],
-    encoder5: Encoder[T5],
-    decoder: Decoder[U]
+    using Encoder[T1],
+    Encoder[T2],
+    Encoder[T3],
+    Encoder[T4],
+    Encoder[T5],
+    Decoder[U]
   ) {
     def asCustomFunction: CustomFunction5[T1, T2, T3, T4, T5, U] = CustomFunction5(f)
   }

@@ -30,7 +30,7 @@ import scala.util.{Failure, Success}
 final class CustomFunction6[-T1, -T2, -T3, -T4, -T5, -T6, +U](
   f: (T1, T2, T3, T4, T5, T6) => U
 )(
-  implicit encoder1: Encoder[T1],
+  using encoder1: Encoder[T1],
   encoder2: Encoder[T2],
   encoder3: Encoder[T3],
   encoder4: Encoder[T4],
@@ -68,26 +68,26 @@ final class CustomFunction6[-T1, -T2, -T3, -T4, -T5, -T6, +U](
 object CustomFunction6 {
 
   def apply[T1, T2, T3, T4, T5, T6, U](f: (T1, T2, T3, T4, T5, T6) => U)(
-    implicit encoder1: Encoder[T1],
-    encoder2: Encoder[T2],
-    encoder3: Encoder[T3],
-    encoder4: Encoder[T4],
-    encoder5: Encoder[T5],
-    encoder6: Encoder[T6],
-    decoder: Decoder[U]
+    using Encoder[T1],
+    Encoder[T2],
+    Encoder[T3],
+    Encoder[T4],
+    Encoder[T5],
+    Encoder[T6],
+    Decoder[U]
   ): CustomFunction6[T1, T2, T3, T4, T5, T6, U] =
     new CustomFunction6(f)
 
   implicit final class FromFunction6[-T1, -T2, -T3, -T4, -T5, -T6, +U](
     f: (T1, T2, T3, T4, T5, T6) => U
   )(
-    implicit encoder1: Encoder[T1],
-    encoder2: Encoder[T2],
-    encoder3: Encoder[T3],
-    encoder4: Encoder[T4],
-    encoder5: Encoder[T5],
-    encoder6: Encoder[T6],
-    decoder: Decoder[U]
+    using Encoder[T1],
+    Encoder[T2],
+    Encoder[T3],
+    Encoder[T4],
+    Encoder[T5],
+    Encoder[T6],
+    Decoder[U]
   ) {
     def asCustomFunction: CustomFunction6[T1, T2, T3, T4, T5, T6, U] = CustomFunction6(f)
   }

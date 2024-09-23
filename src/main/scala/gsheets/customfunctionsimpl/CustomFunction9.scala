@@ -87,32 +87,32 @@ object CustomFunction9 {
   def apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, U](
     f: (T1, T2, T3, T4, T5, T6, T7, T8, T9) => U
   )(
-    implicit encoder1: Encoder[T1],
-    encoder2: Encoder[T2],
-    encoder3: Encoder[T3],
-    encoder4: Encoder[T4],
-    encoder5: Encoder[T5],
-    encoder6: Encoder[T6],
-    encoder7: Encoder[T7],
-    encoder8: Encoder[T8],
-    encoder9: Encoder[T9],
-    decoder: Decoder[U]
+    using Encoder[T1],
+    Encoder[T2],
+    Encoder[T3],
+    Encoder[T4],
+    Encoder[T5],
+    Encoder[T6],
+    Encoder[T7],
+    Encoder[T8],
+    Encoder[T9],
+    Decoder[U]
   ): CustomFunction9[T1, T2, T3, T4, T5, T6, T7, T8, T9, U] =
     new CustomFunction9(f)
 
   implicit final class FromFunction9[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, -T9, +U](
     f: (T1, T2, T3, T4, T5, T6, T7, T8, T9) => U
   )(
-    implicit encoder1: Encoder[T1],
-    encoder2: Encoder[T2],
-    encoder3: Encoder[T3],
-    encoder4: Encoder[T4],
-    encoder5: Encoder[T5],
-    encoder6: Encoder[T6],
-    encoder7: Encoder[T7],
-    encoder8: Encoder[T8],
-    encoder9: Encoder[T9],
-    decoder: Decoder[U]
+    using Encoder[T1],
+    Encoder[T2],
+    Encoder[T3],
+    Encoder[T4],
+    Encoder[T5],
+    Encoder[T6],
+    Encoder[T7],
+    Encoder[T8],
+    Encoder[T9],
+    Decoder[U]
   ) {
     def asCustomFunction: CustomFunction9[T1, T2, T3, T4, T5, T6, T7, T8, T9, U] =
       CustomFunction9(f)

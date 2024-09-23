@@ -57,7 +57,7 @@ final class CustomFunction13[
   -T13,
   +U
 ](f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13) => U)(
-  implicit encoder1: Encoder[T1],
+  using encoder1: Encoder[T1],
   encoder2: Encoder[T2],
   encoder3: Encoder[T3],
   encoder4: Encoder[T4],
@@ -148,20 +148,20 @@ object CustomFunction13 {
   def apply[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, U](
     f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13) => U
   )(
-    implicit encoder1: Encoder[T1],
-    encoder2: Encoder[T2],
-    encoder3: Encoder[T3],
-    encoder4: Encoder[T4],
-    encoder5: Encoder[T5],
-    encoder6: Encoder[T6],
-    encoder7: Encoder[T7],
-    encoder8: Encoder[T8],
-    encoder9: Encoder[T9],
-    encoder10: Encoder[T10],
-    encoder11: Encoder[T11],
-    encoder12: Encoder[T12],
-    encoder13: Encoder[T13],
-    decoder: Decoder[U]
+    using Encoder[T1],
+    Encoder[T2],
+    Encoder[T3],
+    Encoder[T4],
+    Encoder[T5],
+    Encoder[T6],
+    Encoder[T7],
+    Encoder[T8],
+    Encoder[T9],
+    Encoder[T10],
+    Encoder[T11],
+    Encoder[T12],
+    Encoder[T13],
+    Decoder[U]
   ): CustomFunction13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, U] =
     new CustomFunction13(f)
 
@@ -183,20 +183,20 @@ object CustomFunction13 {
   ](
     f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13) => U
   )(
-    implicit encoder1: Encoder[T1],
-    encoder2: Encoder[T2],
-    encoder3: Encoder[T3],
-    encoder4: Encoder[T4],
-    encoder5: Encoder[T5],
-    encoder6: Encoder[T6],
-    encoder7: Encoder[T7],
-    encoder8: Encoder[T8],
-    encoder9: Encoder[T9],
-    encoder10: Encoder[T10],
-    encoder11: Encoder[T11],
-    encoder12: Encoder[T12],
-    encoder13: Encoder[T13],
-    decoder: Decoder[U]
+    using Encoder[T1],
+    Encoder[T2],
+    Encoder[T3],
+    Encoder[T4],
+    Encoder[T5],
+    Encoder[T6],
+    Encoder[T7],
+    Encoder[T8],
+    Encoder[T9],
+    Encoder[T10],
+    Encoder[T11],
+    Encoder[T12],
+    Encoder[T13],
+    Decoder[U]
   ) {
     def asCustomFunction
       : CustomFunction13[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, U] =

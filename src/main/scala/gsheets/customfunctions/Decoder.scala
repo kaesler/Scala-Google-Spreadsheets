@@ -19,16 +19,11 @@ trait Decoder[-U] {
 
 object Decoder {
 
-  implicit final val identityDecoder: Decoder[GSheetGrid] =
-    (u: GSheetGrid) => u
-
-  implicit final val cellDecoder: Decoder[ScalaCellGrid] =
-    (u: ScalaCellGrid) => u.asGSheet
-
-  implicit final val stringDecoder: Decoder[String]   = (u: String) => GSheetGrid.one(u)
-  implicit final val doubleDecoder: Decoder[Double]   = (u: Double) => GSheetGrid.one(u)
-  implicit final val intDecoder: Decoder[Int]         = (u: Int) => GSheetGrid.one(u)
-  implicit final val dateDecoder: Decoder[js.Date]    = (u: js.Date) => GSheetGrid.one(u)
-  implicit final val booleanDecoder: Decoder[Boolean] = (u: Boolean) => GSheetGrid.one(u)
-
+  given Decoder[GSheetGrid]    = (u: GSheetGrid) => u
+  given Decoder[ScalaCellGrid] = (u: ScalaCellGrid) => u.asGSheet
+  given Decoder[String]        = (u: String) => GSheetGrid.one(u)
+  given Decoder[Double]        = (u: Double) => GSheetGrid.one(u)
+  given Decoder[Int]           = (u: Int) => GSheetGrid.one(u)
+  given Decoder[js.Date]       = (u: js.Date) => GSheetGrid.one(u)
+  given Decoder[Boolean]       = (u: Boolean) => GSheetGrid.one(u)
 }

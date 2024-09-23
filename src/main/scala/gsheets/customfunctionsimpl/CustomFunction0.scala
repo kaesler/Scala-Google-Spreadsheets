@@ -6,7 +6,7 @@ import scala.scalajs.js
 import scala.util.{Failure, Success, Try}
 
 final class CustomFunction0[+U](f: () => U)(
-  implicit decoder: Decoder[U]
+  using decoder: Decoder[U]
 ) extends (() => GSheetGrid) {
 
   def apply(): GSheetGrid = {
@@ -21,12 +21,12 @@ final class CustomFunction0[+U](f: () => U)(
 object CustomFunction0 {
 
   def apply[U](f: () => U)(
-    implicit decoder: Decoder[U]
+    using Decoder[U]
   ): CustomFunction0[U] =
     new CustomFunction0(f)
 
   implicit final class FromFunction0[+U](f: () => U)(
-    implicit decoder: Decoder[U]
+    using Decoder[U]
   ) {
     def asCustomFunction: CustomFunction0[U] = CustomFunction0(f)
   }

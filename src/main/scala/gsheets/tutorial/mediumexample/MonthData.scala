@@ -15,8 +15,7 @@ final case class MonthData(
 
 object MonthData {
 
-  /** Encoder for Vector of [[MonthData]]. */
-  implicit final val monthDataVectorEncoder: Encoder[Vector[MonthData]] =
+  given Encoder[Vector[MonthData]] =
     (data: GSheetGrid) =>
       Try(
         data.asScala

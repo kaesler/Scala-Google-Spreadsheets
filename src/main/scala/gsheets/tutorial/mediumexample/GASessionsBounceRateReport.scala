@@ -45,7 +45,7 @@ object GASessionsBounceRateReport {
 
   final case class DataRow(sessionsInfo: SessionsInfo, bounceRateInto: BounceRateInfo)
 
-  implicit final val gaReportDecoder: Decoder[GASessionsBounceRateReport] =
+  given Decoder[GASessionsBounceRateReport] =
     (u: GASessionsBounceRateReport) =>
       js.Array(
         js.Array("", "Sessions", "", "", "", "Bounce Rate"),
