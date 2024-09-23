@@ -4,19 +4,19 @@ import gsheets.cells.GSheetGrid
 import gsheets.customfunctions.Input
 import gsheets.customfunctionsimpl.Syntax.*
 import gsheets.tutorial.mediumexample.GASessionsBounceRateReport.{BounceRateInfo, DataRow, SessionsInfo}
+import scala.math.Ordering.Implicits.infixOrderingOps
 import scala.scalajs.js
 import scala.scalajs.js.Date
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 object MediumExample {
 
-  implicit class DateOrdered(date: js.Date) extends Ordered[js.Date] {
-    def compare(that: Date): Int = {
+  given Ordering[Date] with
+    def compare(date: Date, that: Date): Int = {
       if (date.getFullYear != that.getFullYear) date.getFullYear - that.getFullYear
       else if (date.getMonth != that.getMonth) date.getMonth - that.getMonth
       else date.getDay - that.getDay
     }.toInt
-  }
 
   def gaSessionsBounceRateReport(
     data: Vector[MonthData],
