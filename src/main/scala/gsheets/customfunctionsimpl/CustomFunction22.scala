@@ -109,7 +109,7 @@ final class CustomFunction22[
     T22
   ) => U
 )(
-  implicit encoder1: Encoder[T1],
+  using encoder1: Encoder[T1],
   encoder2: Encoder[T2],
   encoder3: Encoder[T3],
   encoder4: Encoder[T4],
