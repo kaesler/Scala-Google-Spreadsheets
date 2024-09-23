@@ -29,7 +29,7 @@ import scala.util.{Failure, Success}
   *   return type
   */
 final class CustomFunction2[-T1, -T2, +U](f: (T1, T2) => U)(
-  implicit encoder1: Encoder[T1],
+  using encoder1: Encoder[T1],
   encoder2: Encoder[T2],
   decoder: Decoder[U]
 ) extends ((Input, Input) => GSheetGrid) {

@@ -38,7 +38,7 @@ import scala.util.{Failure, Success}
 final class CustomFunction10[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, -T9, -T10, +U](
   f: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10) => U
 )(
-  implicit encoder1: Encoder[T1],
+  using encoder1: Encoder[T1],
   encoder2: Encoder[T2],
   encoder3: Encoder[T3],
   encoder4: Encoder[T4],
