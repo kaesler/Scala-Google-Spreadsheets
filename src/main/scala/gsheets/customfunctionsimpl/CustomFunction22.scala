@@ -234,4 +234,4 @@ final class CustomFunction22[
       yield decoder(output)
     ) match
       case Success(value)     => value
-      case Failure(exception) => js.Array(js.Array(exception.getMessage))
+      case Failure(exception) => GSheetGrid.one(exception.getMessage)

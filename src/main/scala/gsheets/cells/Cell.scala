@@ -1,5 +1,6 @@
 package gsheets.cells
 
+import scala.annotation.targetName
 import scala.collection.immutable.Seq
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
@@ -32,10 +33,12 @@ final case class Cell(value: GSheetCellValue):
   /** Returns whether the cell actually contains something. */
   def nonEmpty: Boolean = !isEmpty
 
+  @targetName("equals")
   def ==(that: String): Boolean = (value: Matchable) match
     case s: String => s == that
     case _         => false
 
+  @targetName("equals")
   def ==(that: Double): Boolean = (value: Matchable) match
     case x: Double => x == that
     case _         => false

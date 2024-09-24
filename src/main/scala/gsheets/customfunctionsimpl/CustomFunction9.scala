@@ -76,4 +76,4 @@ final class CustomFunction9[-T1, -T2, -T3, -T4, -T5, -T6, -T7, -T8, -T9, +U](
       yield decoder(output)
     ) match
       case Success(value)     => value
-      case Failure(exception) => js.Array(js.Array(exception.getMessage))
+      case Failure(exception) => GSheetGrid.one(exception.getMessage)
