@@ -4,7 +4,7 @@ import scala.collection.immutable.Seq
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
 import scala.scalajs.js.|
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 /** A Cell is simply a wrapper for values that we get from Google SpreadSheets. As the
   * Google doc says, a value can be a String, a Number (Double), a js.Date or a Boolean.
@@ -40,33 +40,33 @@ final case class Cell(value: GSheetCellValue):
     case x: Double => x == that
     case _         => false
 
-  def toDouble: Try[Double] = Try {
-    (value: Matchable) match
-      case value: Double => value
-      case value: Int    => value
-      case _ =>
-        throw new WrongDataTypeException(
+  def toDouble: Try[Double] = (value: Matchable) match
+    case value: Double => Success(value)
+    case value: Int    => Success(value)
+    case _ =>
+      Failure(
+        WrongDataTypeException(
           s"value ($value) data type is ${value.getClass}, but should be Double."
         )
-  }
+      )
 
-  def toInt: Try[Int] = Try {
-    (value: Matchable) match
-      case value: Double => value.toInt
-      case value: String => value.toInt
-      case _ =>
-        throw new WrongDataTypeException(
+  def toInt: Try[Int] = (value: Matchable) match
+    case value: Double => Success(value.toInt)
+    case value: String => Success(value.toInt)
+    case _ =>
+      Failure(
+        WrongDataTypeException(
           s"value data type is ${value.getClass}, but should be Int."
         )
-  }
+      )
 
-  def toDate: Try[js.Date] = Try {
-    value match
-      case value: js.Date => value
-      case _ =>
-        throw new WrongDataTypeException(
+  def toDate: Try[js.Date] = value match
+    case value: js.Date => Success(value)
+    case _ =>
+      Failure(
+        WrongDataTypeException(
           s"value data type is ${value.getClass}, but should be js.Date."
         )
-  }
+      )
 
   override def toString: String = value.toString
