@@ -62,6 +62,4 @@ final class CustomFunction7[-T1, -T2, -T3, -T4, -T5, -T6, -T7, +U](
         arg7 <- encoder7(input7)
         output = f(arg1, arg2, arg3, arg4, arg5, arg6, arg7)
       yield decoder(output)
-    ) match
-      case Success(value)     => value
-      case Failure(exception) => GSheetGrid.one(exception.getMessage)
+    ).recoverFailure

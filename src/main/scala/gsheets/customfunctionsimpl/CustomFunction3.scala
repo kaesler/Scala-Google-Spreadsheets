@@ -36,6 +36,4 @@ final class CustomFunction3[-T1, -T2, -T3, +U](f: (T1, T2, T3) => U)(
         arg3 <- encoder3(input3)
         output = f(arg1, arg2, arg3)
       yield decoder(output)
-    ) match
-      case Success(value)     => value
-      case Failure(exception) => GSheetGrid.one(exception.getMessage)
+    ).recoverFailure

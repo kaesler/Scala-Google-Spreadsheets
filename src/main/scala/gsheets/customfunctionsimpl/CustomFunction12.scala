@@ -127,6 +127,4 @@ final class CustomFunction12[
           arg12
         )
       yield decoder(output)
-    ) match
-      case Success(value)     => value
-      case Failure(exception) => GSheetGrid.one(exception.getMessage)
+    ).recoverFailure

@@ -11,6 +11,4 @@ final class CustomFunction1[-T, +U](f: T => U)(
 ) extends (Input => GSheetGrid):
 
   def apply(input: Input): GSheetGrid =
-    (for (arg <- encoder(input)) yield decoder(f(arg))) match
-      case Success(value) => value
-      case Failure(e)     => GSheetGrid.one(e.getMessage)
+    (for (arg <- encoder(input)) yield decoder(f(arg))).recoverFailure

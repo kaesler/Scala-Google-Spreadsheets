@@ -50,6 +50,4 @@ final class CustomFunction5[-T1, -T2, -T3, -T4, -T5, +U](f: (T1, T2, T3, T4, T5)
         arg5 <- encoder5(input5)
         output = f(arg1, arg2, arg3, arg4, arg5)
       yield decoder(output)
-    ) match
-      case Success(value)     => value
-      case Failure(exception) => GSheetGrid.one(exception.getMessage)
+    ).recoverFailure

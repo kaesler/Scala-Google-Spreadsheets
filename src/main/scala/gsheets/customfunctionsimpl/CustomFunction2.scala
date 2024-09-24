@@ -3,7 +3,7 @@ package gsheets.customfunctionsimpl
 import gsheets.cells.GSheetGrid
 import gsheets.customfunctions.{Decoder, Encoder, Input}
 import scala.scalajs.js
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Success, Try}
 
 /** A [[CustomFunction2]] represents a Google custom function taking two inputs and
   * returning an [[GSheetGrid]].
@@ -41,6 +41,4 @@ final class CustomFunction2[-T1, -T2, +U](f: (T1, T2) => U)(
         arg2 <- encoder2(input2)
         output = f(arg1, arg2)
       yield decoder(output)
-    ) match
-      case Success(value)     => value
-      case Failure(exception) => GSheetGrid.one(exception.getMessage)
+    ).recoverFailure
