@@ -12,12 +12,18 @@ import scala.util.{Failure, Success, Try}
 final case class Cell(value: GSheetCellValue):
 
   /** Returns whether the content is a Double. */
-  def isNumeric: Boolean = (value: Any).isInstanceOf[Double]
+  def isNumeric: Boolean = value match
+    case _: Double => true
+    case _         => false
 
   /** Returns whether the content is a Date. */
-  def isDate: Boolean = value.isInstanceOf[js.Date]
+  def isDate: Boolean = value match
+    case _: js.Date => true
+    case _          => false
 
-  def isBoolean: Boolean = (value: Any).isInstanceOf[Boolean]
+  def isBoolean: Boolean = value match
+    case _: Boolean => true
+    case _          => false
 
   /** Returns whether this cell contains the empty string, which comes out of empty
     * spreadsheet cells.
