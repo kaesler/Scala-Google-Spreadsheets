@@ -1,5 +1,0 @@
-package gsheets.customfunctions
-
-import gsheets.cells.CellValueGrid
-
-type Output = CellValueGrid
