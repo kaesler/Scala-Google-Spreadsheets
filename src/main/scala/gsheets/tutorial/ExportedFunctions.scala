@@ -217,7 +217,7 @@ object ExportedFunctions:
 
       (result :+ Vector(Cell("Time taken"), Cell(js.Date.now - startTime))).asGSheet
     catch
-      case e: WrongDataTypeException => js.Array(js.Array(e.msg))
+      case e: WrongDataTypeException => GSheetGrid.one(e.msg)
       case e: Throwable              => throw e
 
   /** Returns the predicted income at a given age, given the income of the people in the
