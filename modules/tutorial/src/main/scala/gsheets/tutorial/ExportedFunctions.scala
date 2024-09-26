@@ -1,7 +1,7 @@
 package gsheets.tutorial
 
 import gsheets.cells.GridExtensions.*
-import gsheets.cells.{Cell, GSheetCellValue, GSheetGrid, ScalaGrid, WrongDataTypeException}
+import gsheets.cells.{Cell, GSheetGrid, ScalaGrid, WrongDataTypeException}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportTopLevel
 

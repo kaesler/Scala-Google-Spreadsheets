@@ -1,7 +1,7 @@
 package gsheets.customfunctions
 
 import gsheets.cells.GridExtensions.*
-import gsheets.cells.{Cell, GSheetCellValue, GSheetGrid, ScalaCellGrid}
+import gsheets.cells.{GSheetGrid, ScalaCellGrid}
 import scala.scalajs.js
 
 /** A [[Decoder]] takes the result of a custom function, of type U, and decodes it as an

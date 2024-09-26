@@ -1,7 +1,7 @@
 package gsheets.tutorial.mediumexample
 
+import gsheets.cells.GSheetGrid
 import gsheets.cells.GridExtensions.*
-import gsheets.cells.{GSheetCellValue, GSheetGrid}
 import gsheets.customfunctions.Encoder
 import scala.scalajs.js
 import scala.util.Try

@@ -1,7 +1,6 @@
 package gsheets.cells
 
 import scala.annotation.targetName
-import scala.collection.immutable.Seq
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters.*
 import scala.util.{Failure, Success, Try}

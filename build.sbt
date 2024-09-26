@@ -19,7 +19,7 @@ ThisBuild / scalacOptions ++= Seq(
   "-Wunused:implicits",
   // This causes a problem with:
   //   import scala.scalajs.js.|
-  // "-Wunused:imports",
+  "-Wunused:imports",
   "-Wunused:locals",
   "-Wunused:params",
   "-Wunused:privates",
