@@ -1,8 +1,7 @@
 import org.scalajs.linker.interface.ESVersion
 
-
-ThisBuild /version := "0.1"
-ThisBuild /scalaVersion := "3.5.0"
+ThisBuild / version      := "0.1"
+ThisBuild / scalaVersion := "3.5.0"
 
 val fastCompileRenderer = taskKey[File]("Return main file")
 
@@ -20,7 +19,7 @@ ThisBuild / scalacOptions ++= Seq(
   "-Wunused:implicits",
   // This causes a problem with:
   //   import scala.scalajs.js.|
-  //"-Wunused:imports",
+  // "-Wunused:imports",
   "-Wunused:locals",
   "-Wunused:params",
   "-Wunused:privates",
@@ -235,15 +234,6 @@ def createGoogleFunctions(compiledFileDirectory: File, baseDirectory: File): Uni
   )
 }
 
-fastCompileCreateFunctions := {
-  createGoogleFunctions(fastCompileRenderer.value, baseDirectory.value)
-}
-
-fullCompileCreateFunctions := {
-  createGoogleFunctions(fullCompileRenderer.value, baseDirectory.value)
-}
-
-
 lazy val root = project
   .in(file("."))
   .enablePlugins(ScalaJSPlugin)
@@ -253,8 +243,24 @@ lazy val root = project
     tutorial
   )
   .settings(
-    name := "ScalaSpreadSheets",
-    ThisBuild / scalaJSLinkerConfig ~= {
+    name := "ScalaSpreadSheets"
+  )
+
+lazy val cells = project
+  .in(file("./modules/cells"))
+  .enablePlugins(ScalaJSPlugin)
+
+lazy val facade = project
+  .in(file("./modules/facade"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(cells)
+
+lazy val tutorial = project
+  .in(file("./modules/tutorial"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(facade, cells)
+  .settings(
+    scalaJSLinkerConfig ~= {
       _.withESFeatures(_.withESVersion(ESVersion.ES5_1))
     },
     fastCompileRenderer := {
@@ -262,21 +268,11 @@ lazy val root = project
     },
     fullCompileRenderer := {
       (Compile / fullOptJS).value.data
+    },
+    fastCompileCreateFunctions := {
+      createGoogleFunctions(fastCompileRenderer.value, baseDirectory.value)
+    },
+    fullCompileCreateFunctions := {
+      createGoogleFunctions(fullCompileRenderer.value, baseDirectory.value)
     }
   )
-
-lazy val cells = project
-  .in(file("./modules/cells"))
-  .enablePlugins(ScalaJSPlugin)
-lazy val facade = project
-  .in(file("./modules/facade"))
-  .enablePlugins(ScalaJSPlugin)
-  .dependsOn(cells)
-lazy val tutorial = project
-  .in(file("./modules/tutorial"))
-  .enablePlugins(ScalaJSPlugin)
-  .dependsOn(facade, cells)
-
-
-
-
