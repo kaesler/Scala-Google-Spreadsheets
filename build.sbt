@@ -1,10 +1,8 @@
 import org.scalajs.linker.interface.ESVersion
 
-name := "ScalaSpreadSheets"
 
-version := "0.1"
-
-scalaVersion := "3.5.0"
+ThisBuild /version := "0.1"
+ThisBuild /scalaVersion := "3.5.0"
 
 val fastCompileRenderer = taskKey[File]("Return main file")
 
@@ -245,10 +243,17 @@ fullCompileCreateFunctions := {
   createGoogleFunctions(fullCompileRenderer.value, baseDirectory.value)
 }
 
-lazy val `renderer` = project
+
+lazy val root = project
   .in(file("."))
   .enablePlugins(ScalaJSPlugin)
+  .aggregate(
+    cells,
+    facade,
+    tutorial
+  )
   .settings(
+    name := "ScalaSpreadSheets",
     ThisBuild / scalaJSLinkerConfig ~= {
       _.withESFeatures(_.withESVersion(ESVersion.ES5_1))
     },
@@ -259,3 +264,19 @@ lazy val `renderer` = project
       (Compile / fullOptJS).value.data
     }
   )
+
+lazy val cells = project
+  .in(file("./modules/cells"))
+  .enablePlugins(ScalaJSPlugin)
+lazy val facade = project
+  .in(file("./modules/facade"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(cells)
+lazy val tutorial = project
+  .in(file("./modules/tutorial"))
+  .enablePlugins(ScalaJSPlugin)
+  .dependsOn(facade, cells)
+
+
+
+

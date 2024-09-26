@@ -1,7 +1,7 @@
 package gsheets.tutorial.customfunctions
 
 import gsheets.cells.{Cell, GSheetGrid, ScalaCellGrid, ScalaGrid}
-import gsheets.customfunctions.{Decoder, Input}
+import gsheets.customfunctions.Input
 import gsheets.customfunctionsimpl.Syntax.*
 import scala.scalajs.js.annotation.JSExportTopLevel
 import scala.util.Try
