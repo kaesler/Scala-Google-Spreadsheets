@@ -17,8 +17,6 @@ ThisBuild / scalacOptions ++= Seq(
   "-Wnonunit-statement",
   "-Wunused:explicits",
   "-Wunused:implicits",
-  // This causes a problem with:
-  //   import scala.scalajs.js.|
   "-Wunused:imports",
   "-Wunused:locals",
   "-Wunused:params",
