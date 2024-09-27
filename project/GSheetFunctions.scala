@@ -21,8 +21,8 @@ object GSheetFunctions {
       println(s"[info] Ignoring files: ${ignoredFiles.mkString(", ")}")
 
     // Searching for all files in the src directory.
-    val functions: Array[String] = recursiveListFiles(
-      baseDirectory.toPath.resolve("src/main").toFile
+    val functions: Array[String] = recursiveListScalaFiles(
+      baseDirectory.toPath.resolve("src/main/scala").toFile
     )
       .filterNot { file =>
         ignoredFiles.exists(file.toString.endsWith)
@@ -45,7 +45,7 @@ object GSheetFunctions {
     * The file already f so we may assume comments, parenthesis and stuff are
     * balanced.
     */
-  private def exploreFileForFunctions(file: File): List[String] = {
+  private def exploreFileForFunctions(scalaSourceFile: File): List[String] = {
 
     // while scanning a file, we first collect all function definitions and all comments found
     sealed trait InfoConstruction
@@ -175,7 +175,7 @@ object GSheetFunctions {
               )
             case None =>
               println(
-                s"[warning] malformed exported function at line ${lineIdx + 1} in file ${file.toString}"
+                s"[warning] malformed exported function at line ${lineIdx + 1} in file ${scalaSourceFile.toString}"
               )
               constructInformation(lines.tail, lineIdx + 1, information)
           }
@@ -185,7 +185,7 @@ object GSheetFunctions {
       }
     }
 
-    val exportedFunctionsFile = Files.readAllLines(file.toPath).asScala.toList
+    val exportedFunctionsFile = Files.readAllLines(scalaSourceFile.toPath).asScala.toList
 
     val information =
       constructInformation(exportedFunctionsFile, 0, List[InfoConstruction]())
@@ -225,11 +225,11 @@ object GSheetFunctions {
     ).toList
   }
 
-  private def recursiveListFiles(f: File): Array[File] = {
+  private def recursiveListScalaFiles(f: File): Array[File] = {
     val (directories, files) = f.listFiles.partition(_.isDirectory)
     files
       .filter(
         _.toString.endsWith(".scala")
-      ) ++ directories.flatMap(recursiveListFiles)
+      ) ++ directories.flatMap(recursiveListScalaFiles)
   }
 }
