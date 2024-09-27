@@ -1,13 +1,51 @@
-import sbt.*
+import java.io.File
+import java.nio.file.{Files, StandardOpenOption}
+import scala.collection.JavaConverters.*
+
 object GSheetFunctions {
+
+  def createGoogleFunctions(
+    linkerOutputJsFile: File,
+    baseDirectory: File
+  ): Unit = {
+    // Ignoring files listed in file "google-export-ignore".
+    val ignoredFiles: List[String] =
+      Files.readAllLines(
+        baseDirectory.toPath.resolve("google-export-ignore")
+      ).asScala.toList
+        .map(_.trim)
+        .filter(_.nonEmpty)
+        .filterNot(_.startsWith("//"))
+
+    if (ignoredFiles.nonEmpty)
+      println(s"[info] Ignoring files: ${ignoredFiles.mkString(", ")}")
+
+    // Searching for all files in the src directory.
+    val functions: Array[String] = recursiveListFiles(
+      baseDirectory.toPath.resolve("src/main").toFile
+    )
+      .filterNot { file =>
+        ignoredFiles.exists(file.toString.endsWith)
+      }
+      .flatMap(exploreFileForFunctions)
+
+    Files.write(
+      linkerOutputJsFile.toPath.getParent.resolve("google.js"),
+      //(IO.readLines(linkerOutputJsFile) ++ functions).asJava,
+      (Files.readAllLines(linkerOutputJsFile.toPath).asScala ++ functions).asJava,
+      StandardOpenOption.WRITE,
+      StandardOpenOption.TRUNCATE_EXISTING,
+      StandardOpenOption.CREATE
+    )
+  }
 
   /** Returns a list of stuff to add at the end of compiled file for adding Google
     * functions.
     *
-    * The file already compiled so we may assume comments, parenthesis and stuff are
+    * The file already f so we may assume comments, parenthesis and stuff are
     * balanced.
     */
-  private def exploreFileForFunctions(directory: File): List[String] = {
+  private def exploreFileForFunctions(file: File): List[String] = {
 
     // while scanning a file, we first collect all function definitions and all comments found
     sealed trait InfoConstruction
@@ -15,7 +53,7 @@ object GSheetFunctions {
       docs: List[String],
       startIdx: Int
     ) extends InfoConstruction {
-      val endIdx = startIdx + docs.length - 1
+      val endIdx: Int = startIdx + docs.length - 1
     }
     case class FunctionDefinition(
       functionName: String,
@@ -137,7 +175,7 @@ object GSheetFunctions {
               )
             case None =>
               println(
-                s"[warning] malformed exported function at line ${lineIdx + 1} in file ${directory.toString}"
+                s"[warning] malformed exported function at line ${lineIdx + 1} in file ${file.toString}"
               )
               constructInformation(lines.tail, lineIdx + 1, information)
           }
@@ -147,7 +185,7 @@ object GSheetFunctions {
       }
     }
 
-    val exportedFunctionsFile = IO.readLines(directory)
+    val exportedFunctionsFile = Files.readAllLines(file.toPath).asScala.toList
 
     val information =
       constructInformation(exportedFunctionsFile, 0, List[InfoConstruction]())
@@ -193,32 +231,5 @@ object GSheetFunctions {
       .filter(
         _.toString.endsWith(".scala")
       ) ++ directories.flatMap(recursiveListFiles)
-  }
-
-  def createGoogleFunctions(
-    compiledFileDirectory: File,
-    baseDirectory: File
-  ): Unit = {
-    // ignoring files listed in file "google-export-ignore".
-    val ignoredFiles = IO
-      .readLines(baseDirectory / "google-export-ignore")
-      .map(_.trim)
-      .filter(_.nonEmpty)
-      .filterNot(_.startsWith("//"))
-
-    if (ignoredFiles.nonEmpty)
-      println(s"[info] Ignoring files: ${ignoredFiles.mkString(", ")}")
-
-    // searching for all files in the src directory
-    val functions = recursiveListFiles(baseDirectory / "src/main")
-      .filterNot(file => ignoredFiles.exists(file.toString.endsWith))
-      .flatMap(exploreFileForFunctions)
-
-    val parentDir = compiledFileDirectory.getParent
-
-    IO.writeLines(
-      new java.io.File(parentDir) / "google.js",
-      IO.readLines(compiledFileDirectory) ++ functions
-    )
   }
 }
