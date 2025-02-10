@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 
 object MediumExample:
 
-  given Ordering[Date] with
+  given Ordering[Date]:
     def compare(date: Date, that: Date): Int = {
       if (date.getFullYear != that.getFullYear) date.getFullYear - that.getFullYear
       else if (date.getMonth != that.getMonth) date.getMonth - that.getMonth
