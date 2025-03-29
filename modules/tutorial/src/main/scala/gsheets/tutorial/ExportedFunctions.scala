@@ -21,10 +21,10 @@ object ExportedFunctions:
   @JSExportTopLevel("MEAN")
   def mean(xs: GSheetGrid): Double =
     val flat = xs.flatten
-      .map((_: Matchable) match
-        case s: String if s == "" => 0.0
-        case elem                 => elem
-      )
+      .map: (m: Matchable) =>
+        m match
+          case s: String if s == "" => 0.0
+          case elem                 => elem
       .filter((_: Any).isInstanceOf[Double])
       .map(_.asInstanceOf[Double])
     flat.sum / flat.length
