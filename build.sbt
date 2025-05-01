@@ -50,13 +50,13 @@ lazy val cells = project
 
 lazy val facade = project
   .in(file("./modules/facade"))
-  .enablePlugins(ScalaJSPlugin)
   .dependsOn(cells)
+  .enablePlugins(ScalaJSPlugin)
 
 lazy val tutorial = project
   .in(file("./modules/tutorial"))
-  .enablePlugins(ScalaJSPlugin)
   .dependsOn(facade, cells)
+  .enablePlugins(ScalaJSPlugin)
   .settings(
     scalaJSLinkerConfig ~= {
       _.withESFeatures(_.withESVersion(ESVersion.ES5_1))
