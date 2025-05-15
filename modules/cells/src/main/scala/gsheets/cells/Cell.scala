@@ -2,7 +2,6 @@ package gsheets.cells
 
 import scala.annotation.targetName
 import scala.scalajs.js
-import scala.scalajs.js.JSConverters.*
 import scala.util.{Failure, Success, Try}
 
 /** A Cell is simply a wrapper for values that we get from Google SpreadSheets. As the

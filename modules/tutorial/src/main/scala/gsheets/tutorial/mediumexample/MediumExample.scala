@@ -3,7 +3,8 @@ package gsheets.tutorial.mediumexample
 import gsheets.cells.GSheetGrid
 import gsheets.customfunctions.Input
 import gsheets.customfunctionsimpl.Syntax.*
-import gsheets.tutorial.mediumexample.GASessionsBounceRateReport.{BounceRateInfo, DataRow, SessionsInfo}
+import gsheets.tutorial.mediumexample.GASessionsBounceRateReport
+.{BounceRateInfo, DataRow, SessionsInfo}
 import scala.math.Ordering.Implicits.infixOrderingOps
 import scala.scalajs.js
 import scala.scalajs.js.Date

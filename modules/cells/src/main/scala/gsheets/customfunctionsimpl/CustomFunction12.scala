@@ -2,7 +2,6 @@ package gsheets.customfunctionsimpl
 
 import gsheets.cells.GSheetGrid
 import gsheets.customfunctions.{Decoder, Encoder, Input}
-import scala.scalajs.js
 
 /** A [[CustomFunction12]] represents a Google custom function taking 12 inputs and
   * returning an [[GSheetGrid]].
