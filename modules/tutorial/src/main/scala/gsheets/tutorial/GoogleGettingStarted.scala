@@ -18,7 +18,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
   */
 object GoogleGettingStarted:
 
-  @JSExportTopLevel("DOUBLE")
+  @JSExportTopLevel("double")
   def double(x: Double): Double = 2 * x
 
   /** Multiplies the input value by 2.
@@ -28,7 +28,7 @@ object GoogleGettingStarted:
     * @return
     *   The input multiplied by 2.
     */
-  @JSExportTopLevel("DOUBLE")
+  @JSExportTopLevel("double")
   def double(xs: GSheetGrid): GSheetGrid =
     xs.map(_.map(_.asInstanceOf[Double] * 2).map(_.asInstanceOf[GSheetCellValue]))
 
@@ -37,7 +37,7 @@ object GoogleGettingStarted:
     * @return
     *   Two columns of data representing posts on the G Suite Developer blog.
     */
-  @JSExportTopLevel("GETBLOGPOSTS")
+  @JSExportTopLevel("getBlogPosts")
   def getBlogPosts(): JsGrid[String] =
 
     val url      = "https://gsuite-developers.googleblog.com/atom.xml"

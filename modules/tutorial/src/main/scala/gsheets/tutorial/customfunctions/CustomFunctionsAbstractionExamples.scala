@@ -15,7 +15,7 @@ object CustomFunctionsAbstractionExamples:
     * defined above, and the decoder for Int is defined in the companion object of the
     * [[Decoder]] trait.
     */
-  @JSExportTopLevel("COUNTBIGFOO")
+  @JSExportTopLevel("countBigFoo")
   def jsCountBigFoo(input: Input): GSheetGrid = countBigFoo.asCustomFunction(input)
 
   private def sumByCategory(
@@ -30,7 +30,7 @@ object CustomFunctionsAbstractionExamples:
       .toVector
       .map { case (cat, value) => Vector(Cell(cat), Cell(value)) }
 
-  @JSExportTopLevel("SUMBYCATEGORY")
+  @JSExportTopLevel("sumByCategory")
   def jsSumByCategories(categories: Input, values: Input): GSheetGrid =
     sumByCategory.asCustomFunction(categories, values)
 
@@ -42,6 +42,6 @@ object CustomFunctionsAbstractionExamples:
     *
     * The output of the function is simply the message of the exception.
     */
-  @JSExportTopLevel("THROWEXCEPTION")
+  @JSExportTopLevel("throwException")
   def jsThrowException(input: Input): GSheetGrid =
     throwException.asCustomFunction(input)

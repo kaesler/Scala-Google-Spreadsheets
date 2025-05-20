@@ -18,7 +18,7 @@ object ExportedFunctions:
     * @return
     *   {number} the mean
     */
-  @JSExportTopLevel("MEAN")
+  @JSExportTopLevel("mean")
   def mean(xs: GSheetGrid): Double =
     val flat = xs.flatten
       .map: (m: Matchable) =>
@@ -29,7 +29,7 @@ object ExportedFunctions:
       .map(_.asInstanceOf[Double])
     flat.sum / flat.length
 
-  @JSExportTopLevel("MEAN")
+  @JSExportTopLevel("mean")
   def mean(x: Double): Double = x
 
   /** Returns the number of seconds in the form mm:ss.
@@ -37,7 +37,7 @@ object ExportedFunctions:
     * @param seconds
     *   {number} the number of seconds
     */
-  @JSExportTopLevel("SECONDSTOMINUTESECONDS")
+  @JSExportTopLevel("seconds2MinuteSeconds")
   def seconds2MinuteSeconds(seconds: Double): String =
     val roundedSeconds = math.round(seconds)
     val s              = roundedSeconds % 60
@@ -47,14 +47,14 @@ object ExportedFunctions:
     *
     * We consider only elements that are Double by filtering on the isNumeric method.
     */
-  @JSExportTopLevel("CUSTOMSUM")
+  @JSExportTopLevel("customSum")
   def sum(elems: GSheetGrid): Double =
     elems.asScala.flatten
       .filter(_.isNumeric)
       .map(_.toDouble.get)
       .sum
 
-  @JSExportTopLevel("GETTYPES")
+  @JSExportTopLevel("getTypes")
   def types(elems: GSheetGrid): GSheetGrid =
     elems.asScala.map(_.map(v => Cell(v.isEmpty))).asGSheet
 
@@ -117,7 +117,7 @@ object ExportedFunctions:
   /** Returns a table containing only the adults in the data. An adult is a person whose
     * age is at least 18.
     */
-  @JSExportTopLevel("GETADULTS")
+  @JSExportTopLevel("getAdults")
   def adults(data: GSheetGrid): GSheetGrid =
     data.asScala
       .map(rowToPerson)
@@ -128,7 +128,7 @@ object ExportedFunctions:
   /** Returns a table containing the adults whose income is above the average of income.
     * The last row also contains the average income, for reference.
     */
-  @JSExportTopLevel("ABOVEINCOMEAVERAGE")
+  @JSExportTopLevel("aboveIncomeAverage")
   def aboveIncomeAverage(data: GSheetGrid): GSheetGrid =
     val persons = data.asScala.map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)
@@ -201,7 +201,7 @@ object ExportedFunctions:
     * Each row of the X matrix must be one data. Each row of the Y matrix must be an array
     * of one element corresponding to the X data.
     */
-  @JSExportTopLevel("LINEARREGRESSION")
+  @JSExportTopLevel("linearRegression")
   def linearRegression(
     trainingDataX: GSheetGrid,
     trainingDataY: GSheetGrid
@@ -228,7 +228,7 @@ object ExportedFunctions:
     * reason why income should be proportional to the age, and not quadratic of
     * sub-linear.
     */
-  @JSExportTopLevel("PREDICTINCOMEATAGE")
+  @JSExportTopLevel("predictIncomeAtAge")
   def predictIncomeAtAge(data: GSheetGrid, age: Int): Double =
     val persons = data.asScala.map(rowToPerson)
     val adults  = persons.filter(_.age >= 18)

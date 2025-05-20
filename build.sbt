@@ -58,8 +58,9 @@ lazy val tutorial = project
   .dependsOn(facade, cells)
   .enablePlugins(ScalaJSPlugin)
   .settings(
+    publish / skip := true,
     scalaJSLinkerConfig ~= {
-      _.withESFeatures(_.withESVersion(ESVersion.ES5_1))
+      _.withESFeatures(_.withESVersion(ESVersion.ES2021))
     },
     fastCompileRenderer := {
       (Compile / fastOptJS).value.data
