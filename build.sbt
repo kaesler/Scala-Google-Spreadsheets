@@ -60,7 +60,7 @@ lazy val tutorial = project
   .settings(
     publish / skip := true,
     scalaJSLinkerConfig ~= {
-      _.withESFeatures(_.withESVersion(ESVersion.ES2021))
+      _.withESFeatures(_.withESVersion(ESVersion.ES2020))
     },
     fastCompileRenderer := {
       (Compile / fastOptJS).value.data
