@@ -61,7 +61,14 @@ lazy val tutorial = project
   .settings(
     publish / skip := true,
     scalaJSLinkerConfig ~= {
-      _.withESFeatures(_.withESVersion(ESVersion.ES2020))
+      _.withESFeatures(
+        _.withESVersion(
+          // Note: Anything later results in linked output
+          // which uses the "||=" operator, which fails to
+          // parse in the Google AppScript (V8) interpreter.
+          ESVersion.ES2020
+        )
+      )
     },
     fastCompileRenderer := {
       (Compile / fastOptJS).value.data
