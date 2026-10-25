@@ -6,6 +6,6 @@ import scala.util.Try
 extension (attempt: Try[GSheetGrid])
   def recoverFailure: GSheetGrid =
     attempt.fold(
-      ex => GSheetGrid.one(ex.getMessage),
+      ex => throw ex,
       identity
     )

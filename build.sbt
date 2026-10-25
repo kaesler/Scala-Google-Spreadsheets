@@ -1,14 +1,16 @@
 import org.scalajs.linker.interface.ESVersion
 
-ThisBuild / organization := "org.kae"
-ThisBuild / version      := "0.1"
-ThisBuild / scalaVersion := "3.7.0"
+organization := "org.kae"
+version      := "0.1-SNAPSHOT"
+scalaVersion := "3.10.0"
 
+@transient
 val fastCompileRenderer = taskKey[File]("Return main file")
 
 lazy val fastCompileCreateFunctions =
   taskKey[Unit]("Fast compile, and adds to the compiled file the created functions")
 
+@transient
 val fullCompileRenderer = taskKey[File]("Return full optimized main file")
 
 lazy val fullCompileCreateFunctions =
@@ -23,7 +25,7 @@ ThisBuild / scalacOptions ++= Seq(
   "-Wunused:params",
   "-Wunused:privates",
   "-Wvalue-discard",
-  "-Xfatal-warnings",
+  "-Werror",
   "-Xmigration",
   "-deprecation",
   "-explain-types",

@@ -40,7 +40,7 @@ object GoalsTesting:
         )
       )
 
-    if (goalsWithUrl.nonEmpty) {
+    if goalsWithUrl.nonEmpty then {
       val rangeNotation =
         s"A1:${alphabet(goalsWithUrl.head.length - 1)}${goalsWithUrl.length}"
 

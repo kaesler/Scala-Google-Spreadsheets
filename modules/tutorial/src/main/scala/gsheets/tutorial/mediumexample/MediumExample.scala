@@ -13,12 +13,12 @@ object MediumExample:
 
   given Ordering[Date]:
     def compare(date: Date, that: Date): Int = {
-      if (date.getFullYear != that.getFullYear) date.getFullYear - that.getFullYear
-      else if (date.getMonth != that.getMonth) date.getMonth - that.getMonth
-      else date.getDay - that.getDay
+      if date.getFullYear() != that.getFullYear() then date.getFullYear() - that.getFullYear()
+      else if date.getMonth() != that.getMonth() then date.getMonth() - that.getMonth()
+      else date.getDay() - that.getDay()
     }.toInt
 
-  def gaSessionsBounceRateReport(
+  private def gaSessionsBounceRateReport(
     data: Vector[MonthData],
     currentMonth: js.Date
   ): GASessionsBounceRateReport =
@@ -29,9 +29,9 @@ object MediumExample:
     ): Vector[MonthData] =
       d.filter(_.date >= from).filter(_.date <= to)
 
-    val firstDayOfYear = new js.Date(currentMonth.getFullYear.toInt, 0)
+    val firstDayOfYear = new js.Date(currentMonth.getFullYear().toInt, 0)
     val previousMonth =
-      new js.Date(currentMonth.getFullYear.toInt, currentMonth.getMonth.toInt - 1)
+      new js.Date(currentMonth.getFullYear().toInt, currentMonth.getMonth().toInt - 1)
 
     val ytdData           = betweenDates(firstDayOfYear, currentMonth, data)
     val currentMonthData  = betweenDates(currentMonth, currentMonth, data)

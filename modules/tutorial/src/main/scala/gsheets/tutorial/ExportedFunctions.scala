@@ -41,7 +41,7 @@ object ExportedFunctions:
   def seconds2MinuteSeconds(seconds: Double): String =
     val roundedSeconds = math.round(seconds)
     val s              = roundedSeconds % 60
-    s"${roundedSeconds / 60}:${if (s < 10) s"0$s" else s}"
+    s"${roundedSeconds / 60}:${if s < 10 then s"0$s" else s}"
 
   /** An example of how to implement the sum function in Scala.
     *
@@ -92,17 +92,17 @@ object ExportedFunctions:
     def age: Int =
       val now = new js.Date(js.Date.now())
 
-      val hadBirthday: Boolean = now.getMonth > dateOfBirth.getMonth ||
-        (now.getMonth == dateOfBirth.getMonth && now.getDay >= dateOfBirth.getDay)
+      val hadBirthday: Boolean = now.getMonth() > dateOfBirth.getMonth() ||
+        (now.getMonth() == dateOfBirth.getMonth() && now.getDay() >= dateOfBirth.getDay())
 
-      now.getFullYear().toInt - dateOfBirth.getFullYear().toInt + (if (hadBirthday) 0
+      now.getFullYear().toInt - dateOfBirth.getFullYear().toInt + (if hadBirthday then 0
                                                                    else -1)
 
     def toRow: Vector[Cell] = Vector(
       Cell(firstName),
       Cell(lastName),
       Cell(dateOfBirth),
-      Cell(if (sex == Male) "M" else "F"),
+      Cell(if sex == Male then "M" else "F"),
       Cell(income)
     )
 
@@ -110,7 +110,7 @@ object ExportedFunctions:
     row(0).value.asInstanceOf[String],
     row(1).value.asInstanceOf[String],
     row(2).toDate.get,
-    if (row(3).value.asInstanceOf[String] == "M") Male else Female,
+    if row(3).value.asInstanceOf[String] == "M" then Male else Female,
     row(4).toDouble.get
   )
 
@@ -180,14 +180,14 @@ object ExportedFunctions:
       alpha: Double,
       iteration: Int
     ): Vector[Double] =
-      if (iteration > maxIteration) prevTheta
+      if iteration > maxIteration then prevTheta
       else {
         val theta   = prevTheta.zip(grad(prevTheta, alpha)).map(elem => elem._1 - elem._2)
         val newCost = cost(theta, zippedTraining)
 
-        if (newCost > prevCost)
+        if newCost > prevCost then
           makeIterations(prevTheta, prevCost, alpha / 2, iteration + 1)
-        else if (prevCost - newCost < tol) theta
+        else if prevCost - newCost < tol then theta
         else makeIterations(theta, newCost, alpha, iteration + 1)
       }
 
@@ -207,7 +207,7 @@ object ExportedFunctions:
     trainingDataY: GSheetGrid
   ): GSheetGrid =
     try
-      val startTime = js.Date.now
+      val startTime = js.Date.now()
       val result = Vector(
         linearRegression(
           trainingDataX.asScala.map(_.map(_.toDouble.get)),
@@ -215,7 +215,7 @@ object ExportedFunctions:
         ).map(new Cell(_))
       )
 
-      (result :+ Vector(Cell("Time taken"), Cell(js.Date.now - startTime))).asGSheet
+      (result :+ Vector(Cell("Time taken"), Cell(js.Date.now() - startTime))).asGSheet
     catch
       case e: WrongDataTypeException => GSheetGrid.one(e.msg)
       case e: Throwable              => throw e
