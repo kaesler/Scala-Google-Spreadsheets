@@ -74,9 +74,11 @@ lazy val tutorial = project
     },
     fastCompileRenderer := {
       (Compile / fastOptJS).value.data
+      // TODO: https://www.scala-sbt.org/2.x/docs/en/concepts/caching.html#caching-files
     },
     fullCompileRenderer := {
       (Compile / fullOptJS).value.data
+      // TODO: https://www.scala-sbt.org/2.x/docs/en/concepts/caching.html#caching-files
     },
     fastCompileCreateFunctions := {
       GSheetFunctions.createGoogleFunctions(
